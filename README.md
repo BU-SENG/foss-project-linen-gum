@@ -45,7 +45,7 @@ yarn install
 
 ---
 
-### 🚀 3️⃣ Run the Project Locally
+### 🚀 3 Run the Project Locally
 
 #### 🖥️ Run Frontend (React + Vite)
 
@@ -63,7 +63,7 @@ http://localhost:5173
 
 ---
 
-## 🧱 Project Structure
+## Project Structure
 
 ```
 foss-project-linen-gum/
@@ -89,10 +89,17 @@ foss-project-linen-gum/
 
 ---
 
-## 🛠️ Backend Setup (Coming Soon)
+## Backend Setup (Coming Soon)
 
 > ⚙️ **Note:** This README currently includes instructions for running the frontend only.  
 > The file will be updated soon with backend setup details.
+
+
+## License
+
+This project is licensed under the MIT License — see the [`LICENSE`](./LICENSE) file for details.
+
+---
 
 
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/BY41byMO)
