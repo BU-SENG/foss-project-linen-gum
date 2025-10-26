@@ -22,16 +22,19 @@ cd foss-project-linen-gum
 
 ---
 
-### 2. Install Dependencies
+### 2. Install Dependencies (Frontend & Backend)
 
 The project has two parts — **frontend** and **backend**.  
-The following instructions cover only the frontend setup.
+
 
 #### 🖥️ Frontend
+
+Navigate to frontend directory
 
 ```bash
 cd frontend
 ```
+Install dependencies:
 
 ```bash
 npm install
@@ -45,11 +48,63 @@ yarn install
 
 ---
 
-### 🚀 3 Run the Project Locally
+### ⚙️ Backend Setup
+
+Navigate to the backend directory from the frontend:
+
+```bash
+cd ../backend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+or
+
+```bash
+yarn install
+```
+
+---
+
+### 🌍 Install Nodemon Globally
+
+Nodemon automatically restarts your backend server whenever file changes occur.  
+Install it globally using:
+
+```bash
+npm install -g nodemon
+```
+
+> To verify installation:
+>
+> ```bash
+> nodemon -v
+> ```
+
+---
+
+### 3. Create a `.env` File in the root of the backend directory
+
+In your `backend` folder, create a file named `.env` and add the following variable:
+
+```env
+PORT=5000
+```
+
+> 💡 You can change the port number if you wish. The server will use the value from this `.env` file.
+
+---
+
+
+###  4. Run the Project Locally
 
 #### 🖥️ Run Frontend (React + Vite)
 
-Start the app in development mode **(do this while you are still in the frontend folder)**:
+Start the app in development mode **(do this while you are in the frontend folder)**:
 
 ```bash
 npm run dev
@@ -63,11 +118,31 @@ http://localhost:5173
 
 ---
 
+#### ⚙️ Run Backend (Node.js + Express)
+
+**(do this while you are in the backend folder)**:
+
+
+
+```bash
+npm run dev
+```
+
+
+**(Optional)** Then open your web browser or API tool (e.g., Postman) and visit:
+
+```
+http://localhost:5000
+```
+
+---
+
 ## Project Structure
 
 ```
 foss-project-linen-gum/
 ├── frontend/              # React + Vite 
+│   ├── node_modules/      # Auto-generated after npm install 
 │   ├── public/
 │   ├── src/
 │   │   ├── assets/
@@ -83,16 +158,30 @@ foss-project-linen-gum/
 │   ├── package.json
 │   └── vite.config.js
 │
-├── backend/               # Node.js + Express
+├── backend/            # Node.js + Express
+│   ├── node_modules/   # Auto-generated after npm install
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middlewares/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   └── utils/
+│   ├── app.js
+│   ├── server.js
+│   ├── package.json
+│   └── .env   
+|   
 └── README.md
 ```
 
 ---
 
-## Backend Setup (Coming Soon)
+## Database Setup (Coming Soon)
 
-> ⚙️ **Note:** This README currently includes instructions for running the frontend only.  
-> The file will be updated soon with backend setup details.
+> ⚙️ **Note:** The backend currently runs without a database connection.  
+> You only need to create a `.env` file and set your preferred port (e.g., `PORT=5000`).  
+> Database setup instructions for MongoDB will be added soon.
 
 
 ## License

@@ -8,6 +8,10 @@ const RootLayout = lazy(() => import("../layout/RootLayout"));
 
 const Home = lazy(() => import("../pages/Home"));
 const Campaigns = lazy(() => import("../pages/Campaigns"));
+const CampaignDetails = lazy(() => import("../pages/CampaignDetails"));
+const Donate = lazy(() => import("../pages/Donate"));
+const SignUp = lazy(() => import("../pages/Auth/SignUp"));
+const SignIn = lazy(() => import("../pages/Auth/SignIn"));
 
 export const routes = createRoutesFromElements(
   <>
@@ -21,6 +25,23 @@ export const routes = createRoutesFromElements(
         element={
           <RouteWithAnimation Component={Campaigns} Fallback={Preloader} />
         }
+      />
+      <Route
+        path="campaign/1"
+        element={
+          <RouteWithAnimation
+            Component={CampaignDetails}
+            Fallback={Preloader}
+          />
+        }
+      />
+      <Route
+        path="signup"
+        element={<RouteWithAnimation Component={SignUp} Fallback={Preloader} />}
+      />
+      <Route
+        path="signin"
+        element={<RouteWithAnimation Component={SignIn} Fallback={Preloader} />}
       />
     </Route>
   </>
