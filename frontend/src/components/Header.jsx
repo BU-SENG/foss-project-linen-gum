@@ -4,20 +4,24 @@ import { MenuIcon, XIcon, HeartIcon, UserIcon } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // Mock authentication state
+  // Mock authentication state. It will be updated to be dynamic when integrated with the backend
   const isLoggedIn = false;
   const userRole = null;
   return (
     <nav className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
+          {/* Left section: Logo + Navigation links */}
           <div className="flex items-center">
+            {/* Brand Logo */}
             <Link to="/" className="shrink-0 flex items-center">
               <HeartIcon className="h-8 w-8 text-blue-600" />
               <span className="ml-2 text-2xl font-bold text-blue-600">
                 Aidly
               </span>
             </Link>
+
+            {/* Desktop navigation links (hidden on small screens) */}
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <Link
                 to="/"
@@ -33,9 +37,11 @@ const Header = () => {
               </Link>
             </div>
           </div>
+          {/* Right section: Auth buttons or user dashboard links */}
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
             {isLoggedIn ? (
               <div className="flex items-center">
+                {/* Conditional admin dashboard link */}
                 {userRole === "admin" && (
                   <Link
                     to="/admin/dashboard"
@@ -57,15 +63,16 @@ const Header = () => {
                 </button>
               </div>
             ) : (
+              // When user is NOT logged in
               <div>
                 <Link
-                  to="/auth"
+                  to="/signin"
                   className="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Log in
                 </Link>
                 <Link
-                  to="/auth"
+                  to="/signup"
                   className="ml-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
                 >
                   Sign up
@@ -73,6 +80,7 @@ const Header = () => {
               </div>
             )}
           </div>
+          {/* Mobile menu toggle button (visible only on small screens) */}
           <div className="flex items-center sm:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -87,7 +95,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      {/* Mobile menu */}
+      {/* Mobile menu (shown when isMenuOpen is true) */}
       {isMenuOpen && (
         <div className="sm:hidden">
           <div className="pt-2 pb-3 space-y-1">
