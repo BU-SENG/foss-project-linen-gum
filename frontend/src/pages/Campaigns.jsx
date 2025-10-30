@@ -20,7 +20,7 @@ const CampaignCard = ({ campaign }) => {
           {campaign.category}
         </span>
 
-        <h3 className="text-xl font-bold text-gray-900 mb-1 line-clamp-2 min-h-[3.5rem]">
+        <h3 className="text-xl font-bold text-gray-900 mb-1 line-clamp-2 min-h-14">
           {campaign.title}
         </h3>
 
@@ -108,7 +108,7 @@ const Campaigns = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Section */}
-      <div className="bg-white shadow-sm">
+      <div className="bg-gray-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <h1 className="text-4xl font-bold text-gray-900 text-center mb-3">
             Browse Campaigns
