@@ -1,11 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import heroImage from "../assets/images/donate.webp";
 
 const Home = () => {
   return (
-    <div className="w-full">
+    <div className="w-full overflow-auto">
       {/* Hero section */}
-      <section></section>
+      <section className="h-screen w-full">
+        <main className="bg-blue-700 h-full grid grid-cols-2 place-items-center px-16">
+          <div className="text-white w-[480px] flex flex-col gap-4">
+            <h1 className="font-sans text-4xl font-bold mt-0">Make a difference with your generosity.</h1>
+            <p className="font-sans text-sm text-white/75">Support causes you care about and help change lives through Aidly's trusted donation platform.</p>
+            <div className="w-fit flex gap-4">
+              <Link to="/campaigns">
+                <button className="bg-green-500 hover:bg-green-600 transition-colors text-white px-4 py-3 rounded-md border-none">
+                  Browse Campaigns
+                </button>
+              </Link>
+              <Link to="/donate">
+                <button className="bg-transparent hover:bg-white/10 transition-colors text-white px-4 py-3 rounded-md border border-white">
+                  Start a Campaign
+                </button>
+              </Link>
+            </div>
+          </div>
+          
+          <img 
+            src={heroImage} 
+            alt="hero section" 
+            className="w-[560px] h-[340px] mr-[6%] rounded-lg object-cover"
+          />
+        </main>
+      </section>
 
       {/* Featured campaigns section */}
       <section className="py-16 bg-gray-50">
