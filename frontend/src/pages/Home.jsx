@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { campaignsData } from "../data/campaignsData";
 import CampaignCard from "../components/CampaignCard";
 
+// Filter and select only 3 approved campaigns to display as featured
 const featuredCampaigns = campaignsData
   .filter((campaign) => campaign.isApproved)
   .slice(0, 3);
@@ -26,11 +27,14 @@ const Home = () => {
             </p>
           </div>
 
+          {/* Campaign grid — displays 3 approved campaigns */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredCampaigns.map((campaign) => (
               <CampaignCard key={campaign.id} campaign={campaign} />
             ))}
           </div>
+          
+          {/* Button linking to all campaigns page */}
           <div className="mt-12 text-center">
             <Link to="/campaigns">
               <button className="cursor-pointer inline-flex items-center justify-center font-medium rounded-md transition-colors duration-200 bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 text-base py-3 px-6">

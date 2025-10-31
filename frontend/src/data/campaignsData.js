@@ -17,6 +17,7 @@ export const campaignsData = [
     donors: 1240,
     daysLeft: 5,
     isApproved: true,
+    location: "London",
   },
   {
     id: 2,
@@ -31,6 +32,7 @@ export const campaignsData = [
     donors: 85,
     daysLeft: 45,
     isApproved: true,
+    location: "Nigeria",
   },
   {
     id: 3,
@@ -45,6 +47,8 @@ export const campaignsData = [
     donors: 302,
     daysLeft: 30,
     isApproved: true,
+    createdAt: "2025-10-15",
+    location: "Global",
   },
   {
     id: 4,
@@ -59,6 +63,7 @@ export const campaignsData = [
     donors: 124,
     daysLeft: 60,
     isApproved: true,
+    location: "Nigeria",
   },
   {
     id: 5,
@@ -73,5 +78,6 @@ export const campaignsData = [
     donors: 215,
     daysLeft: 12,
     isApproved: true,
+    location: "America",
   },
 ];

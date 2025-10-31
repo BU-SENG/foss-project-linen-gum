@@ -33,9 +33,9 @@ export const routes = createRoutesFromElements(
         }
       />
 
-      {/* Campaign details page (currently hardcoded to ID 1) */}
+      {/* Campaign details page */}
       <Route
-        path="campaign/1"
+        path="campaign/:id"
         element={
           <RouteWithAnimation
             Component={CampaignDetails}
@@ -47,12 +47,7 @@ export const routes = createRoutesFromElements(
       {/* Donate page */}
       <Route
         path="donate"
-        element={
-          <RouteWithAnimation
-            Component={Donate}
-            Fallback={Preloader}
-          />
-        }
+        element={<RouteWithAnimation Component={Donate} Fallback={Preloader} />}
       />
 
       {/* Sign-up page */}
