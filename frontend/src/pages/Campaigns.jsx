@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, Users, Clock } from 'lucide-react';
 import { campaignsData } from '../data/campaignsData';
 
-const CampaignCard = ({ campaign }) => {
+export const CampaignCard = ({ campaign }) => {
   const progressPercentage = (campaign.raised / campaign.goal) * 100;
 
   return (
