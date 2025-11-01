@@ -1,9 +1,32 @@
-import React from 'react'
+import { lazy, Suspense } from "react";
+import Preloader from "../components/Preloader";
 
-export default function DashboardLayout() {
+const SidebarCreator = lazy(() =>
+  import("../components/Sidebar/SidebarCreator")
+);
+const SidebarAdmin = lazy(() => import("../components/Sidebar/SidebarAdmin"));
+
+import { Outlet } from "react-router-dom";
+
+const DashboardLayout = () => {
+  const role = "admin";
   return (
-    <div>
-      <h1 className="text-2xl text-blue-600">Dashboard layout file</h1>
+    <div className="h-screen flex flex-col">
+      <div className="flex flex-1 overflow-hidden">
+        {/* Fixed Sidebar */}
+        <div className="lg:pl-62 lg:block shrink-0">
+          <Suspense fallback={<Preloader />}>
+            {role === "creator" ? <SidebarCreator /> : <SidebarAdmin />}
+          </Suspense>
+        </div>
+
+        {/* Scrollable Main Section */}
+        <main className="flex-1 p-10  bg-gray-100 overflow-y-auto">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
-}
+};
+
+export default DashboardLayout;
