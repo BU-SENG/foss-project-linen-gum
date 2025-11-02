@@ -1,6 +1,6 @@
-# 💕 Aidly
+# Aidly <img src="./frontend/public/heart-logo.svg" alt="Aidly Heart Logo" width="40" /> 
 
-**Aidly** is a **web platform** that is being built with React.js and Tailwind CSS on the frontend and Node.js and Express.Js on the backend. It aims to simplify the process of connecting people in need with verified helpers or organizations. 
+**Aidly** is a **web platform** that is being built with React.js and Tailwind CSS on the frontend and Node.js and Express.Js on the backend. It aims to simplify the process of connecting people in need with verified helpers or organizations.
 
 ---
 
@@ -24,8 +24,7 @@ cd foss-project-linen-gum
 
 ### 2. Install Dependencies (Frontend & Backend)
 
-The project has two parts — **frontend** and **backend**.  
-
+The project has two parts — **frontend** and **backend**.
 
 #### 🖥️ Frontend
 
@@ -34,6 +33,7 @@ Navigate to frontend directory
 ```bash
 cd frontend
 ```
+
 Install dependencies:
 
 ```bash
@@ -48,9 +48,9 @@ yarn install
 
 ---
 
-### ⚙️ Backend Setup
+#### ⚙️ Backend Setup
 
-Navigate to the backend directory from the frontend:
+Navigate to the backend directory from the frontend directory:
 
 ```bash
 cd ../backend
@@ -99,8 +99,35 @@ PORT=5000
 
 ---
 
+## 4 Database Setup (MongoDB)
 
-###  4. Run the Project Locally
+You can use **either** use a **local MongoDB** installation or **MongoDB Atlas (cloud)**.
+This setup explains using a **local MongoDB** installation
+
+---
+
+### 🧩 Local MongoDB Setup
+
+1. **Install MongoDB Community Edition**
+
+   - Download and install from: [https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
+   - Follow the installation steps for your OS.
+
+2. **(Optional) Install MongoDB Compass**
+
+   - MongoDB Compass is a GUI for viewing your collections and documents.
+   - It’s optional and not required to run the backend.
+
+3. **Connect URI**
+   - Add the local URI to your `.env` file:
+
+     ```env
+     MONGO_LOCAL_URI=mongodb://127.0.0.1:27017/aidly_db
+     ```
+
+---
+
+### 5. Run the Project Locally
 
 #### 🖥️ Run Frontend (React + Vite)
 
@@ -122,14 +149,19 @@ http://localhost:5173
 
 **(do this while you are in the backend folder)**:
 
-
-
 ```bash
 npm run dev
 ```
 
 
-**(Optional)** Then open your web browser or API tool (e.g., Postman) and visit:
+If everything works correctly, you should see:
+
+```
+MongoDB Connected: 127.0.0.1
+Server running on http://localhost:5000
+```
+
+**(Optional)** Then open your web browser or API testing tool  and visit:
 
 ```
 http://localhost:5000
@@ -141,8 +173,8 @@ http://localhost:5000
 
 ```
 foss-project-linen-gum/
-├── frontend/              # React + Vite 
-│   ├── node_modules/      # Auto-generated after npm install 
+├── frontend/              # React + Vite
+│   ├── node_modules/      # Auto-generated after npm install
 │   ├── public/
 │   ├── src/
 │   │   ├── assets/
@@ -170,25 +202,17 @@ foss-project-linen-gum/
 │   ├── app.js
 │   ├── server.js
 │   ├── package.json
-│   └── .env   
-|   
+│   └── .env
+|
 └── README.md
 ```
 
 ---
-
-## Database Setup (Coming Soon)
-
-> ⚙️ **Note:** The backend currently runs without a database connection.  
-> You only need to create a `.env` file and set your preferred port (e.g., `PORT=5000`).  
-> Database setup instructions for MongoDB will be added soon.
-
 
 ## License
 
 This project is licensed under the MIT License — see the [`LICENSE`](./LICENSE) file for details.
 
 ---
-
 
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/BY41byMO)

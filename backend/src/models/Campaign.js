@@ -17,7 +17,7 @@ const campaignSchema = new mongoose.Schema(
       },
     ],
     fundingGoal: {
-      type: Number,
+      type: Number, // amount to be raised
       required: true,
     },
     amountRaised: {
