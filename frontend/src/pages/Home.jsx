@@ -11,14 +11,14 @@ const Home = () => {
   return (
     <div className="w-full overflow-auto">
       {/* Hero section */}
-         <section className="min-h-[calc(100vh-4rem)] w-full">
-           <main className="bg-blue-700 min-h-[calc(100vh-4rem)] grid grid-cols-2 items-center px-16">
-          <div className="text-white w-[480px] flex flex-col gap-4">
-            <h1 className="font-sans text-4xl font-bold mt-0">Make a difference with your generosity.</h1>
-            <p className="font-sans text-sm text-white/75">Support causes you care about and help change lives through Aidly's trusted donation platform.</p>
-            <div className="w-fit flex gap-4">
-              <Link to="/campaigns">
-                <button className="bg-green-500 hover:bg-green-600 transition-colors text-white px-4 py-3 rounded-md border-none">
+      <section className="min-h-screen w-full">
+        <main className="bg-blue-700 min-h-screen grid grid-cols-1 md:grid-cols-2 place-items-center px-4 md:px-16 py-8 md:py-0">
+          <div className="text-white w-full max-w-[480px] flex flex-col gap-4 text-center md:text-left">
+            <h1 className="font-sans text-3xl md:text-4xl font-bold mt-0">Make a difference with your generosity.</h1>
+            <p className="font-sans text-sm md:text-base text-white/75">Support causes you care about and help change lives through Aidly's trusted donation platform.</p>
+            <div className="w-full md:w-fit flex flex-col md:flex-row gap-4 items-stretch md:items-center">
+              <Link to="/campaigns" className="w-full md:w-auto">
+                <button className="w-full bg-green-500 hover:bg-green-600 transition-colors text-white px-4 py-3 rounded-md border-none">
                   Browse Campaigns
                 </button>
               </Link>
