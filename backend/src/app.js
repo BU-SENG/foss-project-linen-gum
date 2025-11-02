@@ -4,8 +4,8 @@ import cors from "cors"; // Middleware for enabling Cross-Origin Resource Sharin
 import cookieParser from "cookie-parser"; // Middleware for parsing cookies
 
 // Importing Routes
-import authRoutes from "./routes/authRoutes.js"; // Authentication routes
-import campaignRoutes from "./routes/campaignRoutes.js"; // Campaign routes
+import authRoutes from "./routes/auth.route.js"; // Authentication routes
+import campaignRoutes from "./routes/campaign.route.js"; // Campaign routes
 
 const app = express(); // Creating an instance of an Express application
 
