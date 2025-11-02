@@ -1,6 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import heroImage from "../assets/donate.webp";
+import heroImage from "../assets/images/donate.webp";
+import { campaignsData } from '../data/campaignsData';
+import { CampaignCard } from './Campaigns';
+
+// Get the first 3 campaigns for the featured section
+const featuredCampaigns = campaignsData.slice(0, 3);
 
 const Home = () => {
   return (
