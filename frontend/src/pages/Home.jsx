@@ -2,17 +2,41 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { campaignsData } from "../data/campaignsData";
 import CampaignCard from "../components/CampaignCard";
+import heroImage from "../assets/images/donate.webp";
 
-// Filter and select only 3 approved campaigns to display as featured
-const featuredCampaigns = campaignsData
-  .filter((campaign) => campaign.isApproved)
-  .slice(0, 3);
+// Get the first 3 campaigns for the featured section
+const featuredCampaigns = campaignsData.slice(0, 3);
 
 const Home = () => {
   return (
-    <div className="w-full">
+    <div className="w-full overflow-auto">
       {/* Hero section */}
-      <section></section>
+      <section className="min-h-screen w-full">
+        <main className="bg-blue-700 min-h-screen grid grid-cols-1 md:grid-cols-2 place-items-center px-4 md:px-16 py-8 md:py-0">
+          <div className="text-white w-full max-w-[480px] flex flex-col gap-4 text-center md:text-left">
+            <h1 className="font-sans text-3xl md:text-4xl font-bold mt-0">Make a difference with your generosity.</h1>
+            <p className="font-sans text-sm md:text-base text-white/75">Support causes you care about and help change lives through Aidly's trusted donation platform.</p>
+            <div className="w-full md:w-fit flex flex-col md:flex-row gap-4 items-stretch md:items-center">
+              <Link to="/campaigns" className="w-full md:w-auto">
+                <button className="w-full bg-green-500 hover:bg-green-600 transition-colors text-white px-4 py-3 rounded-md border-none">
+                  Browse Campaigns
+                </button>
+              </Link>
+              <Link to="/donate" className="w-full md:w-auto">
+                <button className="w-full bg-transparent hover:bg-white/10 transition-colors text-white px-4 py-3 rounded-md border border-white">
+                  Start a Campaign
+                </button>
+              </Link>
+            </div>
+          </div>
+          
+          <img 
+            src={heroImage} 
+            alt="hero section" 
+            className="w-full max-w-[560px] h-auto aspect-[1.65/1] mt-8 md:mt-0 md:mr-[6%] rounded-lg object-cover"
+          />
+        </main>
+      </section>
 
       {/* Featured campaigns section */}
       <section className="py-16 bg-gray-50">
