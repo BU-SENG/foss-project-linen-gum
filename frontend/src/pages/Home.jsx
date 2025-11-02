@@ -4,10 +4,8 @@ import { campaignsData } from "../data/campaignsData";
 import CampaignCard from "../components/CampaignCard";
 import heroImage from "../assets/images/donate.webp";
 
-// Filter and select only 3 approved campaigns to display as featured
-const featuredCampaigns = campaignsData
-  .filter((campaign) => campaign.isApproved)
-  .slice(0, 3);
+// Get the first 3 campaigns for the featured section
+const featuredCampaigns = campaignsData.slice(0, 3);
 
 const Home = () => {
   return (
