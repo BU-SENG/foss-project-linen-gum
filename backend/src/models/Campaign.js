@@ -34,11 +34,11 @@ const campaignSchema = new mongoose.Schema(
     },
     isApproved: {
       type: Boolean,
-      default: false, // only approved by admin are visible
+      default: false, 
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "CampaignCreator",
+      ref: "Creator",
       required: true,
     },
   },

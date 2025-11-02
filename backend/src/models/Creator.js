@@ -17,20 +17,18 @@ const creatorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    otp: {
-      type: String,
-    },
-    otpExpires: {
-      type: Date,
-    },
+
     isVerified: {
       type: Boolean,
       default: false,
     },
     resetPasswordToken: String,
-    resetPasswordExpires: Date,
+    resetPasswordExpiresAt: Date,
+    verificationToken: String,
+    verificationTokenExpiresAt: Date,
+    passwordChangedAt: Date,
   },
   { timestamps: true }
 );
 
-export default mongoose.model("CampaignCreator", creatorSchema);
+export default mongoose.model("Creator", creatorSchema);
