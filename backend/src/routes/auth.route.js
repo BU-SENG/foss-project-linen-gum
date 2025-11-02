@@ -9,9 +9,11 @@ import {
 
 const router = express.Router();
 
+router.get("/check-auth", verifyToken, checkAuth);
+
 // Creator registration & verification
 router.post("/register", registerCreator);
-router.get("/verify/:token", verifyEmail);
+router.post("/verify-email", verifyEmail);
 
 // Shared for both Admin and Creator
 router.post("/login", loginUser);
