@@ -2,11 +2,10 @@
 import { lazy } from "react";
 import { Route, createRoutesFromElements } from "react-router-dom";
 
-// Import custom route wrapper and preloader component
+// Import components
 import RouteWithAnimation from "../utils/RouteWithAnimation";
 import Preloader from "../components/Preloader";
-
-import DashboardNotFound from "../pages/Dashboard/DashboardNotFound";
+import ErrorFallback from "../components/ErrorFallback";
 
 // Lazy load all components to improve performance
 const RootLayout = lazy(() => import("../layout/RootLayout"));
@@ -18,6 +17,7 @@ const CampaignDetails = lazy(() => import("../pages/CampaignDetails"));
 const Donate = lazy(() => import("../pages/Donate"));
 const SignUp = lazy(() => import("../pages/Auth/SignUp"));
 const SignIn = lazy(() => import("../pages/Auth/SignIn"));
+const NotFound = lazy(() => import("../pages/NotFound"));
 
 const CreatorDashboard = lazy(() =>
   import("../pages/Dashboard/Creator/CreatorDashboard")
@@ -87,7 +87,7 @@ export const routes = createRoutesFromElements(
         path="*"
         element={
           <RouteWithAnimation
-            Component={DashboardNotFound}
+            Component={NotFound}
             Fallback={Preloader}
           />
         }
@@ -96,7 +96,11 @@ export const routes = createRoutesFromElements(
 
     {/* Campaign Creator Routes */}
     <Route>
-      <Route path="/creator/dashboard" element={<DashboardLayout />}>
+      <Route
+        path="/creator/dashboard"
+        element={<DashboardLayout />}
+        errorElement={<ErrorFallback />}
+      >
         <Route
           index
           element={
@@ -125,7 +129,7 @@ export const routes = createRoutesFromElements(
           path="*"
           element={
             <RouteWithAnimation
-              Component={DashboardNotFound}
+              Component={NotFound}
               Fallback={Preloader}
             />
           }
@@ -138,7 +142,7 @@ export const routes = createRoutesFromElements(
       <Route
         path="/admin/dashboard"
         element={<DashboardLayout />}
-        // errorElement={<ErrorFallback />}
+        errorElement={<ErrorFallback />}
       >
         <Route
           index
@@ -163,7 +167,7 @@ export const routes = createRoutesFromElements(
           path="*"
           element={
             <RouteWithAnimation
-              Component={DashboardNotFound}
+              Component={NotFound}
               Fallback={Preloader}
             />
           }

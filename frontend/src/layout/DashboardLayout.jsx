@@ -9,7 +9,9 @@ const SidebarAdmin = lazy(() => import("../components/Sidebar/SidebarAdmin"));
 import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
-  const role = "admin";
+  // To test, switch between "creator" and "admin" by commenting/uncommenting below
+  const role = "creator";
+  // const role = "admin";
   return (
     <div className="h-screen flex flex-col">
       <div className="flex flex-1 overflow-hidden">
