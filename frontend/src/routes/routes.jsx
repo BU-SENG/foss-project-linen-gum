@@ -2,12 +2,14 @@
 import { lazy } from "react";
 import { Route, createRoutesFromElements } from "react-router-dom";
 
-// Import custom route wrapper and preloader component
+// Import components
 import RouteWithAnimation from "../utils/RouteWithAnimation";
 import Preloader from "../components/Preloader";
+import ErrorFallback from "../components/ErrorFallback";
 
 // Lazy load all components to improve performance
 const RootLayout = lazy(() => import("../layout/RootLayout"));
+const DashboardLayout = lazy(() => import("../layout/DashboardLayout"));
 
 const Home = lazy(() => import("../pages/Home"));
 const Campaigns = lazy(() => import("../pages/Campaigns"));
@@ -15,6 +17,24 @@ const CampaignDetails = lazy(() => import("../pages/CampaignDetails"));
 const Donate = lazy(() => import("../pages/Donate"));
 const SignUp = lazy(() => import("../pages/Auth/SignUp"));
 const SignIn = lazy(() => import("../pages/Auth/SignIn"));
+const NotFound = lazy(() => import("../pages/NotFound"));
+
+const CreatorDashboard = lazy(() =>
+  import("../pages/Dashboard/Creator/CreatorDashboard")
+);
+const CreateCampaign = lazy(() =>
+  import("../pages/Dashboard/Creator/CreateCampaign")
+);
+const MyCampaigns = lazy(() =>
+  import("../pages/Dashboard/Creator/MyCampaigns")
+);
+
+const AdminDashboard = lazy(() =>
+  import("../pages/Dashboard/Admin/AdminDashboard")
+);
+const AdminCampaignList = lazy(() =>
+  import("../pages/Dashboard/Admin/AdminCampaignList")
+);
 
 // Define all application routes
 export const routes = createRoutesFromElements(
@@ -61,6 +81,98 @@ export const routes = createRoutesFromElements(
         path="signin"
         element={<RouteWithAnimation Component={SignIn} Fallback={Preloader} />}
       />
+
+      {/* Page not found */}
+      <Route
+        path="*"
+        element={
+          <RouteWithAnimation
+            Component={NotFound}
+            Fallback={Preloader}
+          />
+        }
+      />
+    </Route>
+
+    {/* Campaign Creator Routes */}
+    <Route>
+      <Route
+        path="/creator/dashboard"
+        element={<DashboardLayout />}
+        errorElement={<ErrorFallback />}
+      >
+        <Route
+          index
+          element={
+            <RouteWithAnimation
+              Component={CreatorDashboard}
+              Fallback={Preloader}
+            />
+          }
+        />
+        <Route
+          path="my-campaigns"
+          element={
+            <RouteWithAnimation Component={MyCampaigns} Fallback={Preloader} />
+          }
+        />
+        <Route
+          path="create-campaign"
+          element={
+            <RouteWithAnimation
+              Component={CreateCampaign}
+              Fallback={Preloader}
+            />
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <RouteWithAnimation
+              Component={NotFound}
+              Fallback={Preloader}
+            />
+          }
+        />
+      </Route>
+    </Route>
+
+    {/* Admin Routes */}
+    <Route>
+      <Route
+        path="/admin/dashboard"
+        element={<DashboardLayout />}
+        errorElement={<ErrorFallback />}
+      >
+        <Route
+          index
+          element={
+            <RouteWithAnimation
+              Component={AdminDashboard}
+              Fallback={Preloader}
+            />
+          }
+        />
+        <Route
+          path="all-campaigns"
+          element={
+            <RouteWithAnimation
+              Component={AdminCampaignList}
+              Fallback={Preloader}
+            />
+          }
+        />
+
+        <Route
+          path="*"
+          element={
+            <RouteWithAnimation
+              Component={NotFound}
+              Fallback={Preloader}
+            />
+          }
+        />
+      </Route>
     </Route>
   </>
 );
