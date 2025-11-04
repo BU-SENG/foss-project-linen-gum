@@ -13,7 +13,7 @@ const Home = () => {
       {/* Hero section */}
       <section className="min-h-screen w-full">
         <main className="bg-blue-700 min-h-screen grid grid-cols-1 md:grid-cols-2 place-items-center px-4 md:px-16 py-8 md:py-0">
-          <div className="text-white w-full max-w-[480px] flex flex-col gap-4 text-center md:text-left">
+          <div className="text-white w-full max-w-md flex flex-col gap-4 text-center md:text-left">
             <h1 className="font-sans text-3xl md:text-4xl font-bold mt-0">
               Make a difference with your generosity.
             </h1>
@@ -38,7 +38,7 @@ const Home = () => {
           <img
             src={heroImage}
             alt="hero section"
-            className="w-full max-w-[560px] h-auto aspect-[1.65/1] mt-8 md:mt-0 md:mr-[6%] rounded-lg object-cover"
+            className="w-full max-w-xl h-auto aspect-[1.65/1] mt-8 md:mt-0 md:mr-[6%] rounded-lg object-cover"
           />
         </main>
       </section>
@@ -88,12 +88,12 @@ const Home = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/campaigns">
-                <button className="inline-flex items-center justify-center font-medium rounded-md transition-colors duration-200  border border-gray-300 text-gray-700 text-base py-3 px-6  bg-blue-600">
+                <button className="w-full cursor-pointer inline-flex items-center justify-center font-medium rounded-md transition-colors duration-200  border border-gray-300 text-gray-700 text-white py-3 px-6  bg-blue-600">
                   Donate Now
                 </button>
               </Link>
               <Link to="/auth">
-                <button className="inline-flex items-center justify-center font-medium rounded-md transition-colors duration-200 bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 text-base py-3 px-6">
+                <button className="inline-flex cursor-pointer items-center justify-center font-medium rounded-md transition-colors duration-200 bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 text-base py-3 px-6">
                   Create Campaigns
                 </button>
               </Link>
