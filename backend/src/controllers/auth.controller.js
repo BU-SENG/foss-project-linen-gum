@@ -149,7 +149,72 @@ export const registerCreator = async (req, res) => {
 };
 
 // To login all users (campaign creators and admins)
-export const loginUser = async (req, res) => {};
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Validating Input
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Email and password are required",
+      });
+    }
+
+    //   Checking if user exists in creator collection
+    let user = await Creator.findOne({ email });
+    let role = "creator";
+
+    // If not found in creator collection, check in admin collection
+    if (!user) {
+      user = await Admin.findOne({ email });
+      role = "admin";
+    }
+
+    //   If user not found in both collections, do dummy password compare to prevent timing attacks
+    if (!user) {
+      await bcryptjs.compare(password || "", DUMMY_PASSWORD_HASH);
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    //   Compare passwords from input field with the one in database.
+    const isPasswordValid = await bcryptjs.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ message: "Invalid email or password", success: false });
+    }
+
+    // //   Checking if creator's email is verified
+    // if (!user.isVerified && role === "creator") {
+    //   return res
+    //     .status(403)
+    //     .json({ message: "Please verify your email to login" });
+    // }
+
+    //   Generating JWT token and setting it in HTTP-only cookie
+    generateTokenAndSetCookie(res, user._id, role);
+
+    //   Sending response
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      // user: {
+      //   id: user._id,
+      //   fullName: user.fullName,
+      //   email: user.email,
+      //   role,
+      // },
+      data: {
+        ...user._doc,
+        password: undefined,
+        isVerified: user.isVerified,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error", success: false });
+  }
+};
 
 // To logout all users
 export const logout = async (req, res) => {};
