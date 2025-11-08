@@ -5,11 +5,12 @@ import {
   getCampaignById,
   updateCampaign,
 } from "../controllers/campaign.controller.js";
+import { isCreator, verifyToken } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 // Campaign routes
-router.post("/create", createCampaign);
+router.post("/create", verifyToken, isCreator, createCampaign);
 router.get("/", getAllCampaigns);
 router.get("/:id", getCampaignById);
 router.put("/:id", updateCampaign);

@@ -7,6 +7,9 @@ export const registerCreator = async (req, res) => {};
 // To login all users (campaign creators and admins)
 export const loginUser = async (req, res) => {};
 
+// To logout all users
+export const logout = async (req, res) => {};
+
 // To verify email addresses of campaign creators
 export const verifyEmail = async (req, res) => {};
 
