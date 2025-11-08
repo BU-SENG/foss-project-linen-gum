@@ -6,74 +6,66 @@ const CampaignCard = ({ campaign }) => {
   const progressPercentage = (campaign.raised / campaign.goal) * 100;
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
-      {/* Image Section */}
-      <Link to={`/campaign/${campaign.id}`}>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
+      <div className="relative h-48 overflow-hidden shrink-0">
         <img
           src={campaign.image}
-          alt={campaign.title || "Campaign image"}
-          className="w-full h-48 object-cover"
+          alt={campaign.title || 'Campaign image'}
+          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
         />
-      </Link>
+      </div>
 
-      {/* Content Section */}
-      <div className="p-4 flex flex-col grow">
-        <div className="mb-2">
-          <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-            {campaign.category}
-          </span>
-        </div>
+      <div className="p-6 flex flex-col grow">
+        <span className="inline-block px-3 py-1 text-xs font-medium text-blue-600 bg-blue-50 rounded-full mb-3 w-fit">
+          {campaign.category}
+        </span>
 
-        <Link
-          to={`/campaign/${campaign.id}`}
-          className="block hover:text-blue-600 transition-colors duration-200"
-        >
-          <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-            {campaign.title}
-          </h3>
-        </Link>
+        <h3 className="text-xl font-bold text-gray-900 mb-1 line-clamp-2 min-h-14">
+          {campaign.title}
+        </h3>
 
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+        <p className="text-gray-600 text-sm mb-4 min-h-22">
           {campaign.description}
         </p>
 
-        <p className="text-gray-500 text-sm mb-3">
-          by <span className="font-medium">{campaign.organizer}</span>
+        <p className="text-sm text-gray-500 mb-4 line-clamp-1">
+          by <span className="font-medium text-gray-700">{campaign.organizer}</span>
         </p>
 
-        {/* Progress Bar */}
-        <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
-          <div
-            className="bg-green-500 h-2 rounded-full"
-            style={{ width: `${Math.min(progressPercentage, 100)}%` }}
-          ></div>
+        <div className="mb-4">
+          <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+            <div
+              className="bg-green-500 h-2 rounded-full transition-all duration-500"
+              style={{ width: `${Math.min(progressPercentage, 100)}%` }}
+            />
+          </div>
+
+          <div className="flex justify-between items-center">
+            <div>
+              <span className="text-xl font-bold text-gray-900">
+                ${campaign.raised.toLocaleString()}
+              </span>
+              <span className="text-sm text-gray-500 ml-2">
+                raised of ${campaign.goal.toLocaleString()}
+              </span>
+            </div>
+          </div>
         </div>
 
-        <div className="flex justify-between text-sm text-gray-500 mb-4">
-          <span className="font-semibold">
-            ${campaign.raised.toLocaleString()}
-          </span>
-          <span>raised of ${campaign.goal.toLocaleString()}</span>
-        </div>
-
-        {/* Donors and Time */}
-        <div className="flex justify-between text-xs text-gray-500">
-          <div className="flex items-center">
-            <Users size={14} className="mr-1" />
+        <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+          <div className="flex items-center gap-1">
+            <Users size={16} />
             <span>{campaign.donors} donors</span>
           </div>
-          <div className="flex items-center">
-            <Clock size={14} className="mr-1" />
+          <div className="flex items-center gap-1">
+            <Clock size={16} />
             <span>{campaign.daysLeft} days left</span>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Donate Section */}
-      <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
         <Link
           to={`/donate/${campaign.id}`}
-          className="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-md transition-colors duration-200 cursor-pointer"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 mt-auto cursor-pointer text-center block"
         >
           Donate Now
         </Link>
