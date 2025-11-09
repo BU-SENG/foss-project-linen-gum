@@ -12,7 +12,7 @@ const CampaignCard = ({ campaign }) => {
         <img
           src={campaign.image}
           alt={campaign.title || "Campaign image"}
-          className="w-full h-48 object-cover"
+          className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
         />
       </Link>
 
