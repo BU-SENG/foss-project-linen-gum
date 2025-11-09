@@ -29,8 +29,8 @@ export const registerAdmin = async (req, res) => {
     }
 
     //  Hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const salt = await bcryptjs.genSalt(10);
+    const hashedPassword = await bcryptjs.hash(password, salt);
 
     //   Store verification token (OTP)
     const verificationToken = crypto.randomBytes(32).toString("hex");
@@ -226,4 +226,7 @@ export const verifyEmail = async (req, res) => {};
 export const forgotPassword = async (req, res) => {};
 
 // Logic to reset password
-export const resetPassword = async (req, res) => {};
+export const resetPassword = async (req, res) => { };
+
+// To check authentication status
+export const checkAuth = async (req, res) => {}
