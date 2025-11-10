@@ -63,7 +63,6 @@ export const registerAdmin = async (req, res) => {
         verificationTokenExpiry: undefined,
       },
       adminId: admin._id,
-      verificationToken,
     });
   } catch (err) {
     console.log(err);
@@ -134,7 +133,6 @@ export const registerCreator = async (req, res) => {
       message: "Creator registered successfully. Please verify your email.",
       success: true,
       creatorId: creator._id,
-      verificationToken,
       data: {
         ...creator._doc,
         password: undefined,

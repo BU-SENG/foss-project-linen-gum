@@ -57,7 +57,7 @@ const campaignSchema = new mongoose.Schema(
     },
     isApproved: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,

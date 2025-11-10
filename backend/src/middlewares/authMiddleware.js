@@ -55,17 +55,25 @@ export const verifyToken = async (req, res, next) => {
 
 // Checking if user is an admin
 export const isAdmin = (req, res, next) => {
-  if (!req.userRole || req.userRole !== "admin") {
-    return res
-      .status(403)
-      .json({ success: false, message: "You can not perfom this action" });
+  try {
+    // Check if user role exists and it is admin
+    if (!req.userRole || req.userRole !== "admin") {
+      return res
+        .status(403)
+        .json({ success: false, message: "You can not perfom this action" });
+    }
+    next(); // Proceed if user is an admin
+  } catch (error) {
+    console.error("Error in isAdmin middleware:", error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
+// checking if user is a creator
 export const isCreator = (req, res, next) => {
   try {
-    // req.userRole from the verifyToken middleware
-    if (req.userRole !== "creator") {
+    // Check if user role exists and it is creator
+    if (!req.userRole || req.userRole !== "creator") {
       return res.status(403).json({
         success: false,
         message: "Access denied! Only creators can perform this action.",
