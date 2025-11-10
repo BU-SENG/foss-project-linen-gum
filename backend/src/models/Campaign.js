@@ -11,6 +11,25 @@ const campaignSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+      enum: [
+        "Education",
+        "Health",
+        "Technology",
+        "Environment",
+        "Community",
+        "Business",
+        "Charity",
+        "Art",
+        "Other",
+      ],
+    },
+    location: {
+      type: String,
+      required: true,
+    },
     images: [
       {
         type: String, // store image URLs or file paths
@@ -24,6 +43,10 @@ const campaignSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    numberOfDonors: {
+      type: Number,
+      default: 0,
+    },
     duration: {
       type: Number, // number of days
       required: true,
@@ -34,7 +57,7 @@ const campaignSchema = new mongoose.Schema(
     },
     isApproved: {
       type: Boolean,
-      default: false, 
+      default: false,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
