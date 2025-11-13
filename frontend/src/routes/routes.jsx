@@ -17,6 +17,8 @@ const CampaignDetails = lazy(() => import("../pages/CampaignDetails"));
 const Donate = lazy(() => import("../pages/Donate"));
 const SignUp = lazy(() => import("../pages/Auth/SignUp"));
 const SignIn = lazy(() => import("../pages/Auth/SignIn"));
+const DonationFailed = lazy(() => import("../pages/DonationFailed"));
+const DonationSuccessful = lazy(() => import("../pages/DonationSuccessful"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 
 const CreatorDashboard = lazy(() =>
@@ -76,6 +78,25 @@ export const routes = createRoutesFromElements(
         element={<RouteWithAnimation Component={SignUp} Fallback={Preloader} />}
       />
 
+      {/* Donation Successful Page */}
+      <Route
+        path="success"
+        element={
+          <RouteWithAnimation
+            Component={DonationSuccessful}
+            Fallback={Preloader}
+          />
+        }
+      />
+
+      {/* Donation Failed Page */}
+      <Route
+        path="failed"
+        element={
+          <RouteWithAnimation Component={DonationFailed} Fallback={Preloader} />
+        }
+      />
+
       {/* Sign-in page */}
       <Route
         path="signin"
@@ -86,10 +107,7 @@ export const routes = createRoutesFromElements(
       <Route
         path="*"
         element={
-          <RouteWithAnimation
-            Component={NotFound}
-            Fallback={Preloader}
-          />
+          <RouteWithAnimation Component={NotFound} Fallback={Preloader} />
         }
       />
     </Route>
@@ -128,10 +146,7 @@ export const routes = createRoutesFromElements(
         <Route
           path="*"
           element={
-            <RouteWithAnimation
-              Component={NotFound}
-              Fallback={Preloader}
-            />
+            <RouteWithAnimation Component={NotFound} Fallback={Preloader} />
           }
         />
       </Route>
@@ -166,10 +181,7 @@ export const routes = createRoutesFromElements(
         <Route
           path="*"
           element={
-            <RouteWithAnimation
-              Component={NotFound}
-              Fallback={Preloader}
-            />
+            <RouteWithAnimation Component={NotFound} Fallback={Preloader} />
           }
         />
       </Route>
