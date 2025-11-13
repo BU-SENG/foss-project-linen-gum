@@ -23,7 +23,7 @@ const RootLayout = () => {
         </Suspense>
 
         {/* Main content area where nested routes (pages) will render */}
-        <main className="grow bg-white dark:bg-gray-900 text-gray-100 transition-colors duration-200">
+        <main className="grow bg-white  text-gray-100 transition-colors duration-200">
           <Outlet />
         </main>
 
