@@ -1,7 +1,7 @@
 import Admin from "../models/Admin.js";
 import Creator from "../models/Creator.js";
 import bcryptjs from "bcryptjs";
-
+import { sendVerificationEmail } from "../mail/emailService.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 
 const DUMMY_PASSWORD_HASH =
