@@ -1,7 +1,7 @@
 import Admin from "../models/Admin.js";
 import Creator from "../models/Creator.js";
 import bcryptjs from "bcryptjs";
-import crypto from "crypto";
+
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 
 const DUMMY_PASSWORD_HASH =
@@ -22,9 +22,15 @@ export const registerAdmin = async (req, res) => {
       });
     }
 
-    //   Check if email already exists
+    //   Check if email already exists in Admin collection
     const existingAdmin = await Admin.findOne({ email });
     if (existingAdmin) {
+      return res.status(409).json({ message: "Email already in use" });
+    }
+
+    // Check if email already exists in Creator collection
+    const existingCreator = await Creator.findOne({ email });
+    if (existingCreator) {
       return res.status(409).json({ message: "Email already in use" });
     }
 
@@ -32,41 +38,34 @@ export const registerAdmin = async (req, res) => {
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
-    //   Store verification token (OTP)
-    const verificationToken = crypto.randomBytes(32).toString("hex");
-    //   Hashing the stored verification token
-    const hashedVerificationToken = await bcryptjs.hash(
-      verificationToken,
-      salt
-    );
-    const verificationTokenExpiry = Date.now() + 1 * 60 * 60 * 1000; // 1 hour from now
-
     //   Create new admin
     const admin = new Admin({
       fullName,
       email,
       password: hashedPassword,
-      verificationToken: hashedVerificationToken,
-      verificationTokenExpiry,
+      isVerified: true,
     });
 
     await admin.save();
 
+    // try {
+    //   await sendVerificationCodeEmail(email, verificationToken);
+    // } catch (error) {
+    //   console.error(error);
+    // }
+
     //   Sending response
     res.status(201).json({
-      message: "Admin registered successfully. Please verify your email.",
+      message: "Admin registered successfully.",
       success: true,
       data: {
         ...admin._doc,
         password: undefined,
-        verificationToken: undefined,
-        verificationTokenExpiry: undefined,
       },
-      adminId: admin._id,
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
 
@@ -83,9 +82,15 @@ export const registerCreator = async (req, res) => {
       });
     }
 
-    //   Check if email already exists
+    //   Check if email already exists in Creator collection
     const existingCreator = await Creator.findOne({ email });
     if (existingCreator) {
+      return res.status(409).json({ message: "Email already in use" });
+    }
+
+    // Check if email already exists in Admin collection
+    const existingAdmin = await Admin.findOne({ email });
+    if (existingAdmin) {
       return res.status(409).json({ message: "Email already in use" });
     }
 
@@ -94,13 +99,13 @@ export const registerCreator = async (req, res) => {
     const hashedPassword = await bcryptjs.hash(password, salt);
 
     //   Store verification token (OTP)
-    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const verificationToken = generateVerificationCode();
     //   Hashing the stored verification token
     const hashedVerificationToken = await bcryptjs.hash(
       verificationToken,
       salt
     );
-    const verificationTokenExpiry = Date.now() + ONE_HOUR; // 1 hour from now
+    const verificationTokenExpiresAt = Date.now() + ONE_HOUR; // 1 hour from current time
 
     //   Create new creator
     const creator = new Creator({
@@ -108,36 +113,28 @@ export const registerCreator = async (req, res) => {
       email,
       password: hashedPassword,
       verificationToken: hashedVerificationToken,
-      verificationTokenExpiry,
+      verificationTokenExpiresAt,
     });
 
     await creator.save();
 
-    // //   Send verification email link
-    // const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}&email=${email}`;
-    // await sendEmail(
-    //   email,
-    //   "Verify your email",
-    //   `Click the link to verify your email: ${verificationLink}`
-    // );
+    try {
+      await sendVerificationEmail(email, fullName, verificationToken);
+    } catch (error) {
+      console.error("Error sending code:", error);
+    }
 
-    // //   Sending verification code (OTP)
-    // await sendEmail(
-    //   email,
-    //   "Email Verification Code",
-    //   `Your email verification code is: ${verificationToken}`
-    // );
+    console.log(verificationToken);
 
     //   Sending response
     res.status(201).json({
       message: "Creator registered successfully. Please verify your email.",
       success: true,
-      creatorId: creator._id,
       data: {
         ...creator._doc,
         password: undefined,
         verificationToken: undefined,
-        verificationTokenExpiry: undefined,
+        verificationTokenExpiresAt,
       },
     });
   } catch (err) {
@@ -158,14 +155,12 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    //   Checking if user exists in creator collection
+    // Check if user exists in creator collection
     let user = await Creator.findOne({ email });
-    let role = "creator";
 
     // If not found in creator collection, check in admin collection
     if (!user) {
       user = await Admin.findOne({ email });
-      role = "admin";
     }
 
     //   If user not found in both collections, do dummy password compare to prevent timing attacks
@@ -182,30 +177,49 @@ export const loginUser = async (req, res) => {
         .json({ message: "Invalid email or password", success: false });
     }
 
-    // //   Checking if creator's email is verified
-    // if (!user.isVerified && role === "creator") {
-    //   return res
-    //     .status(403)
-    //     .json({ message: "Please verify your email to login" });
-    // }
+    // To check if the user is verified
+    if (user.role !== "admin" && !user.isVerified) {
+      // To generate a new OTP and hash it before storing in the database
+      const verificationToken = generateVerificationCode();
+      const hashedVerificationToken = await bcryptjs.hash(
+        verificationToken,
+        10
+      );
+
+      user.verificationToken = hashedVerificationToken;
+      user.verificationTokenExpiresAt = Date.now() + 10 * 60 * 1000; // 10 mins
+      await user.save();
+
+      try {
+        await sendVerificationEmail(
+          user.email,
+          user.fullName,
+          verificationToken
+        );
+      } catch (error) {
+        console.error("Failed to send verification email:", error);
+      }
+
+      return res.status(403).json({
+        success: false,
+        message:
+          "Email not verified. Check your email or spam folder for the verification code.",
+        needVerification: true,
+      });
+    }
 
     //   Generating JWT token and setting it in HTTP-only cookie
-    generateTokenAndSetCookie(res, user._id, role);
+    generateTokenAndSetCookie(res, user._id, user.role);
 
     //   Sending response
     res.status(200).json({
       success: true,
       message: "Login successful",
-      // user: {
-      //   id: user._id,
-      //   fullName: user.fullName,
-      //   email: user.email,
-      //   role,
-      // },
       data: {
         ...user._doc,
         password: undefined,
         isVerified: user.isVerified,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -224,7 +238,7 @@ export const verifyEmail = async (req, res) => {};
 export const forgotPassword = async (req, res) => {};
 
 // Logic to reset password
-export const resetPassword = async (req, res) => { };
+export const resetPassword = async (req, res) => {};
 
 // To check authentication status
-export const checkAuth = async (req, res) => {}
+export const checkAuth = async (req, res) => {};
