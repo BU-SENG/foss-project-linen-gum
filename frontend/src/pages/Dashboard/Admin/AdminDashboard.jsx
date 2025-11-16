@@ -1,4 +1,5 @@
 import React from "react";
+import { ChartBarIcon, FolderIcon, UserIcon, CogIcon, ArrowLeftOnRectangleIcon, EyeIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 function AdminDashboard() {
   return (
@@ -10,21 +11,21 @@ function AdminDashboard() {
 
         <nav className="flex-1 space-y-2">
           <button className="flex items-center gap-3 p-3 rounded-lg bg-blue-100 text-blue-600 font-medium w-full text-left">
-            <span>📊</span> Dashboard
+            <ChartBarIcon className="w-5 h-5" /> Dashboard
           </button>
           <button className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 w-full text-left">
-            <span>📁</span> Campaigns
+            <FolderIcon className="w-5 h-5" /> Campaigns
           </button>
           <button className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 w-full text-left">
-            <span>👤</span> Users
+            <UserIcon className="w-5 h-5" /> Users
           </button>
           <button className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 w-full text-left">
-            <span>⚙️</span> Settings
+            <CogIcon className="w-5 h-5" /> Settings
           </button>
         </nav>
 
         <button className="mt-auto flex items-center gap-2 text-red-500 hover:text-red-600">
-          <span>↩️</span> Logout
+          <ArrowLeftOnRectangleIcon className="w-5 h-5" /> Logout
         </button>
       </aside>
 
@@ -110,9 +111,15 @@ function AdminDashboard() {
                   <td className="p-3">$15,000</td>
                   <td className="p-3">2023-11-05</td>
                   <td className="p-3 flex gap-3 text-xl">
-                    <button className="text-blue-500">👁️</button>
-                    <button className="text-green-500">✅</button>
-                    <button className="text-red-500">❌</button>
+                    <button className="text-blue-500">
+                      <EyeIcon className="w-5 h-5" />
+                    </button>
+                    <button className="text-green-500">
+                      <CheckIcon className="w-5 h-5" />
+                    </button>
+                    <button className="text-red-500">
+                      <XMarkIcon className="w-5 h-5" />
+                    </button>
                   </td>
                 </tr>
 
@@ -125,9 +132,15 @@ function AdminDashboard() {
                   <td className="p-3">$35,000</td>
                   <td className="p-3">2023-11-03</td>
                   <td className="p-3 flex gap-3 text-xl">
-                    <button className="text-blue-500">👁️</button>
-                    <button className="text-green-500">✅</button>
-                    <button className="text-red-500">❌</button>
+                    <button className="text-blue-500">
+                      <EyeIcon className="w-5 h-5" />
+                    </button>
+                    <button className="text-green-500">
+                      <CheckIcon className="w-5 h-5" />
+                    </button>
+                    <button className="text-red-500">
+                      <XMarkIcon className="w-5 h-5" />
+                    </button>
                   </td>
                 </tr>
               </tbody>
