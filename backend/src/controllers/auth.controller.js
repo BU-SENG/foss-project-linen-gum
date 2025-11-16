@@ -3,6 +3,7 @@ import Creator from "../models/Creator.js";
 import bcryptjs from "bcryptjs";
 import { sendVerificationEmail } from "../mail/emailService.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
+import {generateVerificationCode} from "../utils/generateVerificationCode.js"
 
 const DUMMY_PASSWORD_HASH =
   "$2a$10$CwTycUXWue0Thq9StjUM0uJ8axFzjcxgXmjKPqExE7hFl/jfD2N.G";
