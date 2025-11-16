@@ -7,8 +7,13 @@ import {
 
 const router = express.Router();
 
+// Verify payment callback route
 router.get("/verify", verifyPayment);
+
+// Initialize donation payment route
 router.post("/initialize", initializeDonation);
+
+// Manually clean pending donations that have no transactionId
 router.post("/clean-pending", cleanPendingDonationsManual);
 
 export default router;

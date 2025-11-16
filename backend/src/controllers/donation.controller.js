@@ -167,11 +167,32 @@ export const verifyPayment = async (req, res) => {
   }
 };
 
-/**
- * Cron job helper:
- * To mark old pending donations without transactionId  as "cancelled" periodically (automatically).
- */
-export const cleanPendingDonations = async () => {};
-
 // To manually mark old pending donations without transactionId  as "cancelled"
-export const cleanPendingDonationsManual = async (req, res) => {};
+export const cleanPendingDonationsManual = async (req, res) => {
+  try {
+    // Find donations that are stuck in "pending" state AND have no transaction record
+    const pendingDonations = await Donation.find({
+      paymentStatus: "pending",
+      transactionId: { $exists: false },
+    });
+
+    // Loop through each donation and mark it as cancelled
+    for (const donation of pendingDonations) {
+      donation.paymentStatus = "cancelled";
+      await donation.save();
+      console.log(`Cancelled pending donation: ${donation._id}`);
+    }
+
+    // Respond with success and the count of cancelled donations
+    return res.json({
+      success: true,
+      message: `${pendingDonations.length} pending donations have been cancelled.`,
+    });
+  } catch (error) {
+    console.error("Error cleaning pending donations:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to clean pending donations",
+    });
+  }
+};
