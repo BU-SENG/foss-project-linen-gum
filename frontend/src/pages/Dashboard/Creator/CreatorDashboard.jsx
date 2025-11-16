@@ -1,4 +1,7 @@
 import React from "react";
+import { DollarSign, BarChart, Users, Hourglass } from "lucide-react";
+import medicalImage from "../../../assets/images/medical.png";
+import childrenImage from "../../../assets/images/children.png";
 
 const campaignsData = [
 	{
@@ -9,7 +12,7 @@ const campaignsData = [
 		goal: "$50,000",
 		donors: 215,
 		daysLeft: 12,
-		image: "https://via.placeholder.com/40", // Replace with actual image URL
+		image: medicalImage,
 	},
 	{
 		id: 2,
@@ -19,49 +22,13 @@ const campaignsData = [
 		goal: "$75,000",
 		donors: 302,
 		daysLeft: 30,
-		image: "https://via.placeholder.com/40", // Replace with actual image URL
+		image: childrenImage,
 	},
 ];
 
 const CreatorDashboard = () => {
 	return (
 		<div className="flex min-h-screen bg-gray-100">
-			{/* Sidebar */}
-			<aside className="w-64 bg-white shadow-md">
-				<div className="p-6 font-bold text-xl border-b">Aidly Creator</div>
-				<nav className="p-6 space-y-4">
-					<a
-						href="#"
-						className="block text-gray-700 hover:text-blue-600"
-					>
-						Dashboard
-					</a>
-					<a
-						href="#"
-						className="block text-gray-700 hover:text-blue-600"
-					>
-						My Campaigns
-					</a>
-					<a
-						href="#"
-						className="block text-gray-700 hover:text-blue-600"
-					>
-						Create Campaign
-					</a>
-					<a
-						href="#"
-						className="block text-gray-700 hover:text-blue-600"
-					>
-						Analytics
-					</a>
-				</nav>
-				<div className="absolute bottom-6 p-6 w-64">
-					<button className="w-full text-left text-gray-700 hover:text-blue-600">
-						Logout
-					</button>
-				</div>
-			</aside>
-
 			{/* Main Content */}
 			<main className="flex-1 p-8">
 				<div className="flex justify-between items-center mb-6">
@@ -74,27 +41,23 @@ const CreatorDashboard = () => {
 				{/* Stats */}
 				<div className="grid grid-cols-4 gap-4 mb-6">
 					<div className="bg-white p-4 rounded shadow flex flex-col items-center">
-						<span className="text-green-500 font-bold text-xl">$</span>
+						<DollarSign className="text-green-500 w-6 h-6" />
 						<span className="mt-2 font-semibold text-lg">Total Raised</span>
 						<span className="mt-1 text-gray-700">$77,650</span>
 					</div>
 					<div className="bg-white p-4 rounded shadow flex flex-col items-center">
-						<span className="text-blue-500 font-bold text-xl">📊</span>
-						<span className="mt-2 font-semibold text-lg">
-							Active Campaigns
-						</span>
+						<BarChart className="text-blue-500 w-6 h-6" />
+						<span className="mt-2 font-semibold text-lg">Active Campaigns</span>
 						<span className="mt-1 text-gray-700">2</span>
 					</div>
 					<div className="bg-white p-4 rounded shadow flex flex-col items-center">
-						<span className="text-purple-500 font-bold text-xl">👥</span>
+						<Users className="text-purple-500 w-6 h-6" />
 						<span className="mt-2 font-semibold text-lg">Total Donors</span>
 						<span className="mt-1 text-gray-700">3</span>
 					</div>
 					<div className="bg-white p-4 rounded shadow flex flex-col items-center">
-						<span className="text-yellow-500 font-bold text-xl">⏳</span>
-						<span className="mt-2 font-semibold text-lg">
-							Pending Approval
-						</span>
+						<Hourglass className="text-yellow-500 w-6 h-6" />
+						<span className="mt-2 font-semibold text-lg">Pending Approval</span>
 						<span className="mt-1 text-gray-700">0</span>
 					</div>
 				</div>
