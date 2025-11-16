@@ -1,6 +1,7 @@
 import axios from "axios";
 import Donation from "../models/Donation.js";
 import Campaign from "../models/Campaign.js";
+import { sendDonationSuccessEmail } from "../mail/emailService.js";
 
 // Initialize donation
 export const initializeDonation = async (req, res) => {
@@ -128,6 +129,14 @@ export const verifyPayment = async (req, res) => {
           numberOfDonors: incrementDonors,
         },
       });
+
+      // Sending donation success email
+      const donorEmail = donation.donorEmail;
+      await sendDonationSuccessEmail(
+        donorEmail,
+        donation.amount,
+        donation.campaign.title
+      );
 
       return res.redirect(
         `${
