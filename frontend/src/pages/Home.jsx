@@ -101,6 +101,62 @@ const Home = () => {
           </div>
         </div>
       </section>
+      
+      {  /* How It Works  */}
+      <section>
+        <section className="py-16 bg-white">
+          <div className="max-w-5xl mx-auto text-center px-6">
+            <h2 className="text-3xl font-semibold text-gray-800 mb-3">
+              How Aidly Works
+            </h2>
+            <p className="text-gray-500 mb-12">
+              Our platform connects donors with verified campaigns to ensure your
+              contribution makes a real impact.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="bg-blue-50 p-8 rounded-2xl shadow-sm hover:shadow-md transition">
+                <div className="flex justify-center mb-4">
+                  <i className="fa-regular fa-user text-blue-500 text-3xl"></i>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  Create a Campaign
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed">
+                  Campaign creators submit their causes for review. Our team ensures
+                  all campaigns meet our guidelines.
+                </p>
+              </div>
+
+              <div className="bg-blue-50 p-8 rounded-2xl shadow-sm hover:shadow-md transition">
+                <div className="flex justify-center mb-4">
+                  <i className="fa-solid fa-shield text-blue-500 text-3xl"></i>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  Verification Process
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed">
+                  Our admin team reviews and approves campaigns to ensure legitimacy
+                  and transparency.
+                </p>
+              </div>
+
+              <div className="bg-blue-50 p-8 rounded-2xl shadow-sm hover:shadow-md transition">
+                <div className="flex justify-center mb-4">
+                  <i className="fa-regular fa-heart text-blue-500 text-3xl"></i>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  Make a Difference
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed">
+                  Donors can contribute to approved campaigns with the option to
+                  remain anonymous if desired.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
     </div>
   );
 };
