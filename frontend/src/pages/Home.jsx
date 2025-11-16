@@ -88,7 +88,7 @@ const Home = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/campaigns">
-                <button className="w-full cursor-pointer inline-flex items-center justify-center font-medium rounded-md transition-colors duration-200  border border-gray-300 text-gray-700 text-white py-3 px-6  bg-blue-600">
+                <button className="w-full cursor-pointer inline-flex items-center justify-center font-medium rounded-md transition-colors duration-200  border border-gray-300  text-white py-3 px-6  bg-blue-600">
                   Donate Now
                 </button>
               </Link>
@@ -101,8 +101,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      
-      {  /* How It Works  */}
+
+      {/* How It Works  */}
       <section>
         <section className="py-16 bg-white">
           <div className="max-w-5xl mx-auto text-center px-6">
@@ -110,8 +110,8 @@ const Home = () => {
               How Aidly Works
             </h2>
             <p className="text-gray-500 mb-12">
-              Our platform connects donors with verified campaigns to ensure your
-              contribution makes a real impact.
+              Our platform connects donors with verified campaigns to ensure
+              your contribution makes a real impact.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -123,8 +123,8 @@ const Home = () => {
                   Create a Campaign
                 </h3>
                 <p className="text-gray-500 text-sm leading-relaxed">
-                  Campaign creators submit their causes for review. Our team ensures
-                  all campaigns meet our guidelines.
+                  Campaign creators submit their causes for review. Our team
+                  ensures all campaigns meet our guidelines.
                 </p>
               </div>
 
@@ -136,8 +136,8 @@ const Home = () => {
                   Verification Process
                 </h3>
                 <p className="text-gray-500 text-sm leading-relaxed">
-                  Our admin team reviews and approves campaigns to ensure legitimacy
-                  and transparency.
+                  Our admin team reviews and approves campaigns to ensure
+                  legitimacy and transparency.
                 </p>
               </div>
 

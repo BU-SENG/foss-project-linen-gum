@@ -3,18 +3,26 @@ import Creator from "../models/Creator.js";
 import bcryptjs from "bcryptjs";
 import { sendVerificationEmail } from "../mail/emailService.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
-import {generateVerificationCode} from "../utils/generateVerificationCode.js"
+import { generateVerificationCode } from "../utils/generateVerificationCode.js";
 
+// Dummy password hash used for timing-attack prevention.
 const DUMMY_PASSWORD_HASH =
   "$2a$10$CwTycUXWue0Thq9StjUM0uJ8axFzjcxgXmjKPqExE7hFl/jfD2N.G";
 
+// Constant representing one hour in milliseconds.
 const ONE_HOUR = 60 * 60 * 1000;
+
+// Helper function to normalize email
+const normalizeEmail = (email) => (email ? email.trim().toLowerCase() : "");
 
 // To register admin
 export const registerAdmin = async (req, res) => {
   try {
     //  To get the data from the form body
-    const { fullName, email, password } = req.body;
+    let { fullName, email, password } = req.body;
+
+    // Normalize email
+    email = normalizeEmail(email);
 
     //  To validate input
     if (!fullName || !email || !password) {
@@ -49,12 +57,6 @@ export const registerAdmin = async (req, res) => {
 
     await admin.save();
 
-    // try {
-    //   await sendVerificationCodeEmail(email, verificationToken);
-    // } catch (error) {
-    //   console.error(error);
-    // }
-
     //   Sending response
     res.status(201).json({
       message: "Admin registered successfully.",
@@ -74,7 +76,10 @@ export const registerAdmin = async (req, res) => {
 export const registerCreator = async (req, res) => {
   try {
     //  To get the data from the form body
-    const { fullName, email, password } = req.body;
+    let { fullName, email, password } = req.body;
+
+    // Normalize email
+    email = normalizeEmail(email);
 
     //  To validate input
     if (!fullName || !email || !password) {
@@ -147,7 +152,10 @@ export const registerCreator = async (req, res) => {
 // To login all users (campaign creators and admins)
 export const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+
+    // Normalize email
+    email = normalizeEmail(email);
 
     // Validating Input
     if (!email || !password) {
@@ -188,7 +196,7 @@ export const loginUser = async (req, res) => {
       );
 
       user.verificationToken = hashedVerificationToken;
-      user.verificationTokenExpiresAt = Date.now() + 10 * 60 * 1000; // 10 mins
+      user.verificationTokenExpiresAt = Date.now() + ONE_HOUR;
       await user.save();
 
       try {
