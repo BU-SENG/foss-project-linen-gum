@@ -241,5 +241,32 @@ export const forgotPassword = async (req, res) => {};
 // Logic to reset password
 export const resetPassword = async (req, res) => {};
 
-// To check authentication status
-export const checkAuth = async (req, res) => {};
+// Logic to check authentication status
+export const checkAuth = async (req, res) => {
+  try {
+    // Check in creator collection
+    let user = await Creator.findById(req.user.id).select("-password");
+    let role = "creator";
+
+    // If not found in creator collection, check in admin collection
+    if (!user) {
+      user = await Admin.findById(req.user.id).select("-password");
+      role = "admin";
+    }
+
+    // If user not found in both collections
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
+    }
+
+    // If user found, send user data
+    res
+      .status(200)
+      .json({ success: true, message: "User Authenticated", data: user, role });
+  } catch (error) {
+    console.log("Error in checkAuth ", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
