@@ -1,6 +1,6 @@
 # Aidly <img src="./frontend/public/heart-logo.svg" alt="Aidly Heart Logo" width="40" /> 
 
-**Aidly** is a **web platform** that is being built with React.js and Tailwind CSS on the frontend and Node.js and Express.Js on the backend. It aims to simplify the process of connecting people in need with verified helpers or organizations.
+**Aidly** is a **web platform** with a frontend developed using React.js and Tailwind CSS and a backend powered by Node.js and Express.js. It aims to simplify the process of connecting people in need with verified helpers or organizations.
 
 ---
 
@@ -127,7 +127,30 @@ This setup explains using a **local MongoDB** installation
 
 ---
 
-### 5. Run the Project Locally
+
+### 5. Configure Email Sending (SMTP)
+
+Add the following to your backend `.env` file:
+
+```env
+SMTP_HOST=your_smtp_host      # e.g., smtp.gmail.com
+SMTP_PORT=your_smtp_port      # e.g., 465
+EMAIL_USER=your_email_address # e.g., aidly@example.com
+EMAIL_PASS=your_app_password
+EMAIL_NAME=your_email_app_password # NOT your regular email password
+```
+
+> Notes:
+> - `SMTP_HOST`: your email provider's SMTP server
+> - `SMTP_PORT`: usually 587 (TLS) or 465 (SSL)
+> - `EMAIL_USER`: the sending email
+> - `EMAIL_NAME`: the display name for emails 
+> - `EMAIL_PASS`: app password generated from your email provider (for Gmail, go to Google Account > Security > App Passwords)
+
+
+---
+
+### 6. Run the Project Locally
 
 #### 🖥️ Run Frontend (React + Vite)
 
@@ -198,6 +221,7 @@ foss-project-linen-gum/
 │   │   ├── middlewares/
 │   │   ├── models/
 │   │   ├── routes/
+│   │   ├── mail/
 │   │   └── utils/
 │   ├── app.js
 │   ├── server.js
