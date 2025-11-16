@@ -81,3 +81,17 @@ export const campaignsData = [
     location: "America",
   },
 ];
+
+export const categories = [
+  "All Categories",
+  "Education",
+  "Healthcare",
+  "Environment",
+  "Disaster Relief",
+  "Animals",
+  "Arts & Culture",
+  "Community Development",
+  "Sports",
+  "Technology",
+  "Other",
+];
