@@ -14,8 +14,8 @@ export default function SidebarApplicant() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  const handleLogout = async () => {
-    e.preventDefault();
+  const handleLogout = async (e) => {
+    e?.preventDefault();
     //  Handle logout logic
   };
 
@@ -34,31 +34,50 @@ export default function SidebarApplicant() {
         <nav className="flex-1 p-4">
           <ul className="space-y-5">
             <li>
-              <Link
+              <NavLink
                 to="/creator/dashboard"
-                className="flex items-center px-4 py-2 text-gray-900 bg-blue-50 rounded-md"
+                end
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 rounded-md ${
+                    isActive
+                      ? "text-gray-900 bg-blue-50"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`
+                }
               >
                 <LayoutDashboard size={18} className="mr-3 text-blue-600" />
                 <span>Dashboard</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 to="/creator/dashboard/my-campaigns"
-                className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-md"
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 rounded-md ${
+                    isActive
+                      ? "text-gray-900 bg-blue-50"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`
+                }
               >
                 <FileText size={18} className="mr-3" />
                 <span>My Campaigns</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 to="/creator/dashboard/create-campaign"
-                className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-md"
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 rounded-md ${
+                    isActive
+                      ? "text-gray-900 bg-blue-50"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`
+                }
               >
                 <FilePlus size={18} className="mr-3" />
                 <span>Create Campaign</span>
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </nav>
