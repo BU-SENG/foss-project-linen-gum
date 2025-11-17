@@ -2,10 +2,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { routes } from "./routes/routes";
 import { Toaster } from "react-hot-toast";
 import ErrorBoundary from "./components/ErrorBoundary";
+import useAuthInit from "./hooks/useAuthInit";
 
 const router = createBrowserRouter(routes);
 
 function App() {
+  useAuthInit();
   return (
     <>
       <ErrorBoundary>
