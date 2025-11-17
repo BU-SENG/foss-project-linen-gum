@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.10.1",
     "@tailwindcss/vite": "^4.1.16",
     "axios": "^1.12.2",
     "framer-motion": "^12.23.24",
@@ -20,6 +21,7 @@
     "react-hot-toast": "^2.6.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.4",
+    "redux-persist": "^6.0.0",
     "tailwindcss": "^4.1.16"
   },
   "devDependencies": {

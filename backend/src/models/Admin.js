@@ -17,11 +17,16 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      default: "admin",
+    },
+    
     isVerified: {
       type: Boolean,
       default: false,
     },
-    
+
     resetPasswordToken: String,
     resetPasswordExpiresAt: Date,
     verificationToken: String,
