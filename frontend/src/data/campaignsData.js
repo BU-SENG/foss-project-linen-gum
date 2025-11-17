@@ -16,7 +16,7 @@ export const campaignsData = [
     category: "Emergency Response",
     donors: 1240,
     daysLeft: 5,
-    isApproved: true,
+        status: "approved",
     location: "London",
   },
   {
@@ -31,7 +31,7 @@ export const campaignsData = [
     category: "Healthcare",
     donors: 85,
     daysLeft: 45,
-    isApproved: true,
+      status: "approved",
     location: "Nigeria",
   },
   {
@@ -46,7 +46,7 @@ export const campaignsData = [
     category: "Education",
     donors: 302,
     daysLeft: 30,
-    isApproved: true,
+      status: "approved",
     createdAt: "2025-10-15",
     location: "Global",
   },
@@ -62,7 +62,7 @@ export const campaignsData = [
     category: "Animal Welfare",
     donors: 124,
     daysLeft: 60,
-    isApproved: true,
+      status: "approved",
     location: "Nigeria",
   },
   {
@@ -77,7 +77,7 @@ export const campaignsData = [
     category: "Water & Sanitation",
     donors: 215,
     daysLeft: 12,
-    isApproved: true,
+      status: "approved",
     location: "America",
   },
 ];
