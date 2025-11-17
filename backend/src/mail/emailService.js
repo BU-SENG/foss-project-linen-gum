@@ -24,3 +24,26 @@ export const sendVerificationEmail = async (email, name, verificationToken) => {
     throw new Error(`Verification email error: ${error}`);
   }
 };
+
+export const sendDonationSuccessEmail = async (
+  email,
+  amount,
+  campaignTitle
+) => {
+  try {
+    const info = await transporter.sendMail({
+      from: senderEmail,
+      to: email,
+      subject: "🎉Your Donation was Successful!",
+      html: DONATION_SUCCESS_EMAIL_TEMPLATE({
+        amount,
+        campaignTitle,
+      }),
+    });
+
+    console.log("Verification email sent:", info.messageId);
+  } catch (error) {
+    console.error("Failed to send verification email", error);
+    throw new Error(`Verification email error: ${error}`);
+  }
+};

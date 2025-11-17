@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser"; // Middleware for parsing cookies
 // Importing Routes
 import authRoutes from "./routes/auth.route.js"; // Authentication routes
 import campaignRoutes from "./routes/campaign.route.js"; // Campaign routes
+import donationRoutes from "./routes/donation.route.js"
 
 const app = express(); // Creating an instance of an Express application
 
@@ -32,6 +33,7 @@ app.get("/", (req, res) => {
 // API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/campaign", campaignRoutes);
+app.use("/api/donations", donationRoutes);
 
 // 404 Handler for unknown API routes
 app.use((req, res, next) => {
