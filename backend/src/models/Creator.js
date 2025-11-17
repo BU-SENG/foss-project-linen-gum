@@ -7,7 +7,7 @@ const creatorSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    
+
     email: {
       type: String,
       required: true,
@@ -22,6 +22,10 @@ const creatorSchema = new mongoose.Schema(
     isVerified: {
       type: Boolean,
       default: false,
+    },
+    role: {
+      type: String,
+      default: "creator",
     },
     resetPasswordToken: String,
     resetPasswordExpiresAt: Date,

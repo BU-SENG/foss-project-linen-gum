@@ -93,6 +93,10 @@ In your `backend` folder, create a file named `.env` and add the following varia
 
 ```env
 PORT=5000
+JWT_SECRET=
+FLUTTERWAVE_SECRET_KEY=
+FRONTEND_URL=
+BACKEND_URL=
 ```
 
 > 💡 You can change the port number if you wish. The server will use the value from this `.env` file.
