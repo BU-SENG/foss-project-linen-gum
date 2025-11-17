@@ -95,7 +95,25 @@ export const getAllCampaigns = async (req, res) => {
 };
 
 // Get campaigns created by the logged-in creator
-export const myCampaigns = async (req, res) => { }
+export const myCampaigns = async (req, res) => {
+    try {
+        // Fetch all campaigns created by the logged-in user
+        const campaigns = await Campaign.find({ createdBy: req.userId })
+            .sort({ dateCreated: -1 }); // Sort by newest first
+
+        return res.status(200).json({
+            success: true,
+            count: campaigns.length,
+            campaigns,
+        });
+    } catch (error) {
+        console.error("Error fetching creator's campaigns:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+}
 
 // Fetching a single campaign by ID
 export const getCampaignById = async (req, res) => {
