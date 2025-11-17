@@ -55,9 +55,10 @@ const campaignSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    isApproved: {
-      type: Boolean,
-      default: false,
+        status: {
+            type: String,
+            enum: ["pending", "approved", "rejected"],
+            default: "pending",
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
