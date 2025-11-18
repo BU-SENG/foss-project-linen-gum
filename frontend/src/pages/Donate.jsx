@@ -1,29 +1,32 @@
-import React, { useState } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, CreditCard, CheckCircle } from 'lucide-react'
-import { campaigns } from '../utils/mockData'
+import React, { useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, CreditCard, CheckCircle } from "lucide-react";
+import { campaigns } from "../utils/mockData";
 
 const Donate = () => {
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  const [amount, setAmount] = useState('25')
-  const [customAmount, setCustomAmount] = useState('')
-  const [isAnonymous, setIsAnonymous] = useState(false)
-  const [donorName, setDonorName] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-  const [showSuccess, setShowSuccess] = useState(false)
+  const [amount, setAmount] = useState("25");
+  const [customAmount, setCustomAmount] = useState("");
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [donorName, setDonorName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // Find campaign
-  const campaign = campaigns.find((c) => c.id === id)
+  const campaign = campaigns.find((c) => c.id === id);
 
   if (!campaign || !campaign.isApproved) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Campaign Not Found</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          Campaign Not Found
+        </h1>
         <p className="text-gray-600 mb-8">
-          The campaign you're looking for doesn't exist or hasn't been approved yet.
+          The campaign you're looking for doesn't exist or hasn't been approved
+          yet.
         </p>
 
         {/* Manual button styling */}
@@ -33,30 +36,30 @@ const Donate = () => {
           </button>
         </Link>
       </div>
-    )
+    );
   }
 
   const handleAmountSelect = (value) => {
-    setAmount(value)
-    setCustomAmount('')
-  }
+    setAmount(value);
+    setCustomAmount("");
+  };
 
   const handleCustomAmountChange = (e) => {
-    setCustomAmount(e.target.value)
-    setAmount('custom')
-  }
+    setCustomAmount(e.target.value);
+    setAmount("custom");
+  };
 
   const donationAmount =
-    amount === 'custom' ? parseFloat(customAmount) : parseFloat(amount)
+    amount === "custom" ? parseFloat(customAmount) : parseFloat(amount);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setShowSuccess(true)
+    e.preventDefault();
+    setShowSuccess(true);
 
     setTimeout(() => {
-      navigate(`/campaign/${id}`)
-    }, 3000)
-  }
+      navigate(`/campaign/${id}`);
+    }, 3000);
+  };
 
   // SUCCESS SCREEN
   if (showSuccess) {
@@ -73,7 +76,8 @@ const Donate = () => {
             </h1>
 
             <p className="text-gray-600 mb-8">
-              Your donation of ${donationAmount.toFixed(2)} to "{campaign.title}" has been processed successfully.
+              Your donation of ${donationAmount.toFixed(2)} to "{campaign.title}
+              " has been processed successfully.
             </p>
 
             <p className="text-gray-500 mb-8">
@@ -89,7 +93,7 @@ const Donate = () => {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   // DONATION PAGE
@@ -314,6 +318,6 @@ const Donate = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Donate
+export default Donate;
