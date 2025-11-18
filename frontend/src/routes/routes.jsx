@@ -68,7 +68,7 @@ export const routes = createRoutesFromElements(
 
       {/* Donate page */}
       <Route
-        path="donate"
+        path="donate/:id"
         element={<RouteWithAnimation Component={Donate} Fallback={Preloader} />}
       />
 

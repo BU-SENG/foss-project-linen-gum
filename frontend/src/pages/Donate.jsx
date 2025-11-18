@@ -96,7 +96,6 @@ const Donate = () => {
   return (
     <div className="bg-gray-50 min-h-screen w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
         {/* BACK BUTTON */}
         <Link
           to={`/campaign/${id}`}
@@ -107,48 +106,53 @@ const Donate = () => {
         </Link>
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-
           {/* LEFT FORM */}
           <div className="md:col-span-3">
             <div className="bg-white rounded-lg shadow-sm p-6">
-              <h1 className="text-2xl font-bold text-gray-900 mb-6">Make a Donation</h1>
+              <h1 className="text-2xl font-bold text-gray-900 mb-6">
+                Make a Donation
+              </h1>
 
               <form onSubmit={handleSubmit}>
                 {/* PRESET AMOUNTS */}
                 <div className="mb-6">
-                  <label className="block text-gray-700 font-medium mb-2">Select an amount</label>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Select an amount
+                  </label>
 
                   <div className="grid grid-cols-3 gap-3 mb-3">
-                    {['10', '25', '50', '100', '250', '500'].map((value) => (
+                    {["10", "25", "50", "100", "250", "500"].map((value) => (
                       <button
                         key={value}
                         type="button"
                         className={`py-2 px-4 rounded-md border transition ${
                           amount === value
-                            ? 'bg-blue-50 border-blue-600 text-blue-600'
-                            : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                            ? "bg-blue-50 border-blue-600 text-blue-600"
+                            : "border-gray-300 text-gray-700 hover:bg-gray-50"
                         }`}
                         onClick={() => handleAmountSelect(value)}
                       >
-                        ${value}
+                        ₦{value}
                       </button>
                     ))}
                   </div>
 
                   {/* CUSTOM AMOUNT */}
-                  <label className="block text-gray-700 text-sm mb-1">Custom amount</label>
+                  <label className="block text-gray-700 text-sm mb-1">
+                    Custom amount
+                  </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <span className="text-gray-500">$</span>
+                      <span className="text-gray-500">₦</span>
                     </div>
                     <input
                       type="number"
                       min="1"
                       step="0.01"
                       className={`pl-7 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none ${
-                        amount === 'custom'
-                          ? 'border-blue-600 ring-1 ring-blue-600'
-                          : 'border-gray-300'
+                        amount === "custom"
+                          ? "border-blue-600 ring-1 ring-blue-600"
+                          : "border-gray-300"
                       }`}
                       placeholder="Enter amount"
                       value={customAmount}
@@ -167,7 +171,10 @@ const Donate = () => {
                       onChange={() => setIsAnonymous(!isAnonymous)}
                       className="h-4 w-4 text-blue-600 border-gray-300 rounded"
                     />
-                    <label htmlFor="anonymous" className="ml-2 block text-gray-700">
+                    <label
+                      htmlFor="anonymous"
+                      className="ml-2 block text-gray-700"
+                    >
                       Make my donation anonymous
                     </label>
                   </div>
@@ -180,7 +187,8 @@ const Donate = () => {
                 {/* NAME */}
                 <div className="mb-6">
                   <label className="block text-gray-700 font-medium mb-2">
-                    Your Name {!isAnonymous && <span className="text-red-500">*</span>}
+                    Your Name{" "}
+                    {!isAnonymous && <span className="text-red-500">*</span>}
                   </label>
                   <input
                     type="text"
@@ -221,7 +229,9 @@ const Donate = () => {
 
                 {/* PAYMENT DETAILS */}
                 <div className="border-t border-gray-200 pt-6">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Details</h2>
+                  <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                    Payment Details
+                  </h2>
 
                   <div className="bg-gray-50 p-4 rounded-md border border-gray-200 mb-6">
                     <div className="flex items-center">
@@ -238,11 +248,13 @@ const Donate = () => {
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white text-base py-3 px-6 rounded-md transition"
                   >
-                    Donate ${donationAmount ? donationAmount.toFixed(2) : '0.00'}
+                    Donate ₦
+                    {donationAmount ? donationAmount.toFixed(2) : "0.00"}
                   </button>
 
                   <p className="mt-4 text-sm text-gray-500 text-center">
-                    By donating, you agree to our Terms of Service and Privacy Policy.
+                    By donating, you agree to our Terms of Service and Privacy
+                    Policy.
                   </p>
                 </div>
               </form>
@@ -252,7 +264,9 @@ const Donate = () => {
           {/* RIGHT SUMMARY */}
           <div className="md:col-span-2">
             <div className="bg-white rounded-lg shadow-sm p-6 sticky top-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Donation Summary</h2>
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Donation Summary
+              </h2>
 
               <div className="flex items-center mb-6">
                 <img
@@ -261,7 +275,9 @@ const Donate = () => {
                   className="w-16 h-16 object-cover rounded-md mr-4"
                 />
                 <div>
-                  <h3 className="font-medium text-gray-900">{campaign.title}</h3>
+                  <h3 className="font-medium text-gray-900">
+                    {campaign.title}
+                  </h3>
                   <p className="text-sm text-gray-500">by {campaign.creator}</p>
                 </div>
               </div>
@@ -270,20 +286,20 @@ const Donate = () => {
                 <div className="flex justify-between mb-2">
                   <span className="text-gray-700">Donation amount</span>
                   <span className="font-medium text-gray-900">
-                    ${donationAmount ? donationAmount.toFixed(2) : '0.00'}
+                    ₦{donationAmount ? donationAmount.toFixed(2) : "0.00"}
                   </span>
                 </div>
 
                 <div className="flex justify-between">
                   <span className="text-gray-700">Platform fee</span>
-                  <span className="text-gray-900">$0.00</span>
+                  <span className="text-gray-900">₦0.00</span>
                 </div>
               </div>
 
               <div className="flex justify-between mb-6">
                 <span className="font-medium text-gray-900">Total</span>
                 <span className="font-semibold text-gray-900">
-                  ${donationAmount ? donationAmount.toFixed(2) : '0.00'}
+                  ₦{donationAmount ? donationAmount.toFixed(2) : "0.00"}
                 </span>
               </div>
 
@@ -294,11 +310,10 @@ const Donate = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Donate

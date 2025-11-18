@@ -40,10 +40,9 @@ const CampaignDetails = () => {
   const progress = (campaign.raisedAmount / campaign.goalAmount) * 100
 
   return (
-    <div className="bg-gray-50 min-h-screen w-full">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-black">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
           {/* Main Section */}
           <div className="lg:col-span-2">
             <img
@@ -98,13 +97,17 @@ const CampaignDetails = () => {
 
             {/* About Campaign */}
             <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-              <h2 className="text-xl font-semibold mb-4">About this campaign</h2>
+              <h2 className="text-xl font-semibold mb-4">
+                About this campaign
+              </h2>
               <p className="text-gray-700 mb-6">{campaign.description}</p>
               <p className="text-gray-700 mb-6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore.
               </p>
               <p className="text-gray-700">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore.
               </p>
             </div>
 
@@ -158,10 +161,10 @@ const CampaignDetails = () => {
               <div className="mb-6">
                 <div className="flex justify-between mb-2">
                   <span className="font-semibold text-gray-900">
-                    ${campaign.raisedAmount.toLocaleString()}
+                    ₦{campaign.raisedAmount.toLocaleString()}
                   </span>
                   <span className="text-gray-500">
-                    raised of ${campaign.goalAmount.toLocaleString()}
+                    raised of ₦{campaign.goalAmount.toLocaleString()}
                   </span>
                 </div>
 
@@ -179,7 +182,9 @@ const CampaignDetails = () => {
               </div>
 
               <Link to={`/donate/${campaign.id}`}>
-                <button className={`${buttonBase} ${buttonPrimary} ${buttonLG}`}>
+                <button
+                  className={`${buttonBase} ${buttonPrimary} ${buttonLG}`}
+                >
                   Donate Now
                 </button>
               </Link>
@@ -196,11 +201,10 @@ const CampaignDetails = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default CampaignDetails
