@@ -5,6 +5,9 @@ import { sendVerificationEmail } from "../mail/emailService.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import { generateVerificationCode } from "../utils/generateVerificationCode.js";
 
+// Variable to store environment mode
+const isProduction = process.env.NODE_ENV === "production";
+
 // Dummy password hash used for timing-attack prevention.
 const DUMMY_PASSWORD_HASH =
   "$2a$10$CwTycUXWue0Thq9StjUM0uJ8axFzjcxgXmjKPqExE7hFl/jfD2N.G";
@@ -238,7 +241,14 @@ export const loginUser = async (req, res) => {
 };
 
 // To logout all users
-export const logout = async (req, res) => {};
+export const logout = async (req, res) => {
+   res.clearCookie("token", {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "None" : "Lax",
+  });
+  res.status(200).json({ success: true, message: "Logged out successfully" });
+};
 
 // To verify email addresses of campaign creators
 export const verifyEmail = async (req, res) => {};
