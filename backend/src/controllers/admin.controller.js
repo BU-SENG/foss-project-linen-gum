@@ -105,3 +105,21 @@ export const approveCampaign = async (req, res) => {
       .json({ success: false, message: "Server error", error: error.message });
   }
 };
+
+// Reject a campaign
+export const rejectCampaign = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const campaign = await Campaign.findByIdAndUpdate(
+      id,
+      { status: "rejected" },
+      { new: true }
+    );
+    res.json({ success: true, campaign });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: error.message });
+  }
+};
