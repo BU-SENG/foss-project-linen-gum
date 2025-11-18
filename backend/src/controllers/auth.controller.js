@@ -242,7 +242,7 @@ export const loginUser = async (req, res) => {
 
 // To logout all users
 export const logout = async (req, res) => {
-   res.clearCookie("token", {
+  res.clearCookie("token", {
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? "None" : "Lax",
@@ -251,7 +251,69 @@ export const logout = async (req, res) => {
 };
 
 // To verify email addresses of campaign creators
-export const verifyEmail = async (req, res) => {};
+export const verifyEmail = async (req, res) => {
+  try {
+    const { email, code } = req.body;
+
+    if (!email || !code) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and code are required",
+      });
+    }
+
+    //Find the creator by email
+    const creator = await Creator.findOne({
+      email: email.toLowerCase(),
+    });
+
+    if (!creator) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // 2. Check if code is expired
+    if (
+      !creator.verificationTokenExpiresAt ||
+      creator.verificationTokenExpiresAt < Date.now()
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or expired Code",
+      });
+    }
+
+    // 3. Compare OTP using bcrypt
+    const isMatch = await bcryptjs.compare(code, creator.verificationToken);
+
+    if (!isMatch) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or expired code",
+      });
+    }
+
+    // 4. Mark account as verified
+    creator.isVerified = true;
+    creator.verificationToken = undefined;
+    creator.verificationTokenExpiresAt = undefined;
+
+    await creator.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Email verified successfully. You can now log in.",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
 
 // To handle forgot password requests
 export const forgotPassword = async (req, res) => {};
