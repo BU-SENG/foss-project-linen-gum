@@ -87,3 +87,21 @@ export const getAdminCampaigns = async (req, res) => {
     });
   }
 };
+
+// Approve a campaign
+export const approveCampaign = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const campaign = await Campaign.findByIdAndUpdate(
+      id,
+      { status: "approved" },
+      { new: true }
+    );
+    res.json({ success: true, campaign });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: error.message });
+  }
+};
