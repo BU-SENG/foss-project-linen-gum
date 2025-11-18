@@ -55,10 +55,10 @@ const campaignSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-        status: {
-            type: String,
-            enum: ["pending", "approved", "rejected"],
-            default: "pending",
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected", "suspended"],
+      default: "pending",
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
