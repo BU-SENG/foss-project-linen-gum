@@ -123,3 +123,21 @@ export const rejectCampaign = async (req, res) => {
       .json({ success: false, message: "Server error", error: error.message });
   }
 };
+
+// Suspend a campaign
+export const suspendCampaign = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const campaign = await Campaign.findByIdAndUpdate(
+      id,
+      { status: "suspended" },
+      { new: true }
+    );
+    res.json({ success: true, campaign });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: error.message });
+  }
+};
