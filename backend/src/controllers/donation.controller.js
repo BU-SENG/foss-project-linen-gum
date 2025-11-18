@@ -60,6 +60,24 @@ export const initializeDonation = async (req, res) => {
     res.json({ success: true, paymentLink: response.data.data.link });
   } catch (error) {
     console.error(error);
+    if (error.response) {
+      // Check if Flutterwave sent back an HTML error page
+      if (
+        typeof error.response.data === "string" &&
+        error.response.data.includes("<!DOCTYPE html>")
+      ) {
+        return res.status(502).json({
+          success: false,
+          message:
+            "Payment gateway provider is currently down. Please try again later.",
+        });
+      }
+      // Handle standard JSON API errors from Flutterwave
+      return res.status(error.response.status).json({
+        success: false,
+        message: error.response.data.message || "Payment initialization failed",
+      });
+    }
     res.status(500).json({
       success: false,
       message: error.response?.data || "Payment initialization failed",
