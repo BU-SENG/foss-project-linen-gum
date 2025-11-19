@@ -41,9 +41,9 @@ export const sendDonationSuccessEmail = async (
       }),
     });
 
-    console.log("Verification email sent:", info.messageId);
+    console.log("Donation success email sent:", info.messageId);
   } catch (error) {
-    console.error("Failed to send verification email", error);
-    throw new Error(`Verification email error: ${error}`);
+    console.error("Failed to send donation success email", error);
+    throw new Error(`Donation success email error: ${error}`);
   }
 };
