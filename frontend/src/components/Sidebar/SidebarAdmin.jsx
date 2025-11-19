@@ -40,22 +40,36 @@ export default function SidebarApplicant() {
           <nav className="flex-1 p-4">
             <ul className="space-y-5">
               <li>
-                <Link
-                  to="/admin/dashboard"
-                  className="flex items-center px-4 py-2 text-gray-900 bg-blue-50 rounded-md"
+                <NavLink
+                  to="/admin/home"
+                  end
+                  className={({ isActive }) =>
+                    `flex items-center px-4 py-2 rounded-md ${
+                      isActive
+                        ? "text-blue-600 bg-blue-50"
+                        : "text-gray-600 hover:bg-gray-50"
+                    }`
+                  }
                 >
-                  <LayoutDashboard size={18} className="mr-3 text-blue-600" />
+                  <LayoutDashboard size={18} className="mr-3" />
                   <span>Dashboard</span>
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
-                  to="/admin/dashboard/all-campaigns"
-                  className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-md"
+                <NavLink
+                  to="/admin/all-campaigns"
+                  end
+                  className={({ isActive }) =>
+                    `flex items-center px-4 py-2 rounded-md ${
+                      isActive
+                        ? "text-blue-600 bg-blue-50"
+                        : "text-gray-600 hover:bg-gray-50"
+                    }`
+                  }
                 >
                   <FileText size={18} className="mr-3" />
                   <span>Campaigns</span>
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </nav>

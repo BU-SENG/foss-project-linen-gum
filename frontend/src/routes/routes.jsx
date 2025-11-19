@@ -115,12 +115,12 @@ export const routes = createRoutesFromElements(
     {/* Campaign Creator Routes */}
     <Route>
       <Route
-        path="/creator/dashboard"
+        path="/creator"
         element={<DashboardLayout />}
         errorElement={<ErrorFallback />}
       >
         <Route
-          index
+          path="home"
           element={
             <RouteWithAnimation
               Component={CreatorDashboard}
@@ -155,12 +155,12 @@ export const routes = createRoutesFromElements(
     {/* Admin Routes */}
     <Route>
       <Route
-        path="/admin/dashboard"
+        path="/admin/"
         element={<DashboardLayout />}
         errorElement={<ErrorFallback />}
       >
         <Route
-          index
+          path="home"
           element={
             <RouteWithAnimation
               Component={AdminDashboard}
