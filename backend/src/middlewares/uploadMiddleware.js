@@ -55,8 +55,8 @@ const upload = multer({
     fileFilter: fileFilter,
 });
 
-// Middleware to handle multiple images (up to 5)
-export const uploadCampaignImages = upload.array("images", 5);
+// Middleware to handle single image upload
+export const uploadCampaignImages = upload.single("image");
 
 // Error handling middleware for multer errors
 export const handleUploadError = (err, req, res, next) => {
@@ -70,7 +70,7 @@ export const handleUploadError = (err, req, res, next) => {
         if (err.code === "LIMIT_FILE_COUNT") {
             return res.status(400).json({
                 success: false,
-                message: "Maximum 5 images allowed",
+                message: "Only 1 image allowed",
             });
         }
         return res.status(400).json({

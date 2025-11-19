@@ -46,3 +46,10 @@ build/
 tmp/
 temp/
 *.tmp
+
+# ======================
+# Uploaded files
+# ======================
+backend/uploads/*
+!backend/uploads/.gitkeep
+!backend/uploads/*/.gitkeep
