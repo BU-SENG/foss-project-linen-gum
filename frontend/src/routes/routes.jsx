@@ -6,6 +6,7 @@ import { Route, createRoutesFromElements } from "react-router-dom";
 import RouteWithAnimation from "../utils/RouteWithAnimation";
 import Preloader from "../components/Preloader";
 import ErrorFallback from "../components/ErrorFallback";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 // Lazy load all components to improve performance
 const RootLayout = lazy(() => import("../layout/RootLayout"));
@@ -113,7 +114,7 @@ export const routes = createRoutesFromElements(
     </Route>
 
     {/* Campaign Creator Routes */}
-    <Route>
+    <Route element={<ProtectedRoute allowedRoles={["creator"]} />}>
       <Route
         path="/creator"
         element={<DashboardLayout />}
@@ -153,9 +154,9 @@ export const routes = createRoutesFromElements(
     </Route>
 
     {/* Admin Routes */}
-    <Route>
+    <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
       <Route
-        path="/admin/"
+        path="/admin"
         element={<DashboardLayout />}
         errorElement={<ErrorFallback />}
       >
