@@ -1,3 +1,4 @@
+// Handles all authentication-related API calls
 import axios from "../utils/axios";
 import { handleApiError } from "./handleError";
 export const loginUser = async (data) => {
