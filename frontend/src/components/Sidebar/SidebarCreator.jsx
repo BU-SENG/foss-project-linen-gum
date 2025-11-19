@@ -35,27 +35,27 @@ export default function SidebarApplicant() {
           <ul className="space-y-5">
             <li>
               <NavLink
-                to="/creator/dashboard"
+                to="/creator/home"
                 end
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 rounded-md ${
                     isActive
-                      ? "text-gray-900 bg-blue-50"
+                      ? "text-blue-600 bg-blue-50"
                       : "text-gray-600 hover:bg-gray-50"
                   }`
                 }
               >
-                <LayoutDashboard size={18} className="mr-3 text-blue-600" />
+                <LayoutDashboard size={18} className="mr-3" />
                 <span>Dashboard</span>
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/creator/dashboard/my-campaigns"
+                to="/creator/my-campaigns"
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 rounded-md ${
                     isActive
-                      ? "text-gray-900 bg-blue-50"
+                      ? "text-blue-600 bg-blue-50"
                       : "text-gray-600 hover:bg-gray-50"
                   }`
                 }
@@ -66,11 +66,11 @@ export default function SidebarApplicant() {
             </li>
             <li>
               <NavLink
-                to="/creator/dashboard/create-campaign"
+                to="/creator/create-campaign"
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 rounded-md ${
                     isActive
-                      ? "text-gray-900 bg-blue-50"
+                      ? "text-blue-600 bg-blue-50"
                       : "text-gray-600 hover:bg-gray-50"
                   }`
                 }
