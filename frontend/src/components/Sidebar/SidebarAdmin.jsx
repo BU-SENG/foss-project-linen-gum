@@ -14,13 +14,38 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../../api";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 export default function SidebarApplicant() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
-    e.preventDefault();
-    //  Handle logout logic
+    setIsLoggingOut(true); // optional loading state
+    try {
+      await toast.promise(logoutUser(), {
+        loading: "Logging out...",
+        success: "Logged out successfully",
+        error: (err) => err.message || "Logout failed. Try again.",
+      });
+
+      // Clear Redux auth state
+      dispatch(logout());
+
+      // Redirect to signin page
+      navigate("/signin");
+    } catch (err) {
+      console.error("Logout failed:", err);
+      // toast already handled in toast.promise
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   return (
