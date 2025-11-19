@@ -1,6 +1,7 @@
 export const handleApiError = (error) => {
-  return (
-    error?.response?.data ||
-    error?.response || { message: "Something went wrong. Please try again." }
-  );
+  const err = error?.response?.data || error?.response || {};
+  return {
+    message: err.message || "Something went wrong. Please try again.",
+    ...err,
+  };
 };

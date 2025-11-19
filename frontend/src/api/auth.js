@@ -5,7 +5,7 @@ import { handleApiError } from "./handleError";
 export const loginUser = async (data) => {
   try {
     const res = await axios.post("/auth/login", data);
-    return res.data;
+    return res.data.data;
   } catch (error) {
     throw handleApiError(error);
   }
