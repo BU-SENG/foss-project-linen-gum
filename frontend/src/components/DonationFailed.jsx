@@ -1,10 +1,13 @@
 import React from "react";
-import { XMarkIcon, ArrowPathIcon, HomeIcon } from "@heroicons/react/24/outline";
+import {
+  XMarkIcon,
+  ArrowPathIcon,
+  HomeIcon,
+} from "@heroicons/react/24/outline";
 
 function DonationFailed() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-6">
-
       {/* ICON SECTION */}
       <div className="flex items-center justify-center mb-4">
         {/* Outer Circle */}
@@ -23,13 +26,12 @@ function DonationFailed() {
 
       {/* DESCRIPTION */}
       <p className="text-gray-600 mb-8 max-w-md mx-auto text-base leading-relaxed">
-        Oops! Something went wrong while processing your donation.
-        Please check your internet connection or payment details, and try again.
+        Oops! Something went wrong while processing your donation. Please check
+        your internet connection or payment details, and try again.
       </p>
 
       {/* BUTTONS */}
       <div className="flex items-center justify-center gap-4">
-
         {/* TRY AGAIN BUTTON */}
         <button className="bg-red-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-red-700 transition flex items-center gap-2">
           <ArrowPathIcon className="w-5 h-5" />
@@ -41,7 +43,6 @@ function DonationFailed() {
           <HomeIcon className="w-5 h-5" />
           Go Home
         </button>
-
       </div>
     </div>
   );
