@@ -2,12 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle2, Home, List } from "lucide-react"; // Lucide icons
 
-const DonationSuccess = () => {
+const DonationSuccess = ({ title, amount }) => {
   const navigate = useNavigate();
-
-  // Hard-coded values
-  const title = "Save the Children Fund";
-  const amount = "5,000";
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-linear-to-b from-gray-50 to-white px-6 text-center">
