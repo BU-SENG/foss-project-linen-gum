@@ -18,6 +18,7 @@ const CampaignDetails = lazy(() => import("../pages/CampaignDetails"));
 const Donate = lazy(() => import("../pages/Donate"));
 const SignUp = lazy(() => import("../pages/Auth/SignUp"));
 const SignIn = lazy(() => import("../pages/Auth/SignIn"));
+const VerifyEmail = lazy(() => import("../pages/VerifyEmail"));
 const DonationFailed = lazy(() => import("../pages/DonationFailed"));
 const DonationSuccessful = lazy(() => import("../pages/DonationSuccessful"));
 const NotFound = lazy(() => import("../pages/NotFound"));
@@ -102,6 +103,14 @@ export const routes = createRoutesFromElements(
       <Route
         path="signin"
         element={<RouteWithAnimation Component={SignIn} Fallback={Preloader} />}
+      />
+
+      {/* Verify email page */}
+      <Route
+        path="/verify-email"
+        element={
+          <RouteWithAnimation Component={VerifyEmail} Fallback={Preloader} />
+        }
       />
 
       {/* Page not found */}
