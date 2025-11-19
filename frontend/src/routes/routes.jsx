@@ -19,8 +19,6 @@ const Donate = lazy(() => import("../pages/Donate"));
 const SignUp = lazy(() => import("../pages/Auth/SignUp"));
 const SignIn = lazy(() => import("../pages/Auth/SignIn"));
 const VerifyEmail = lazy(() => import("../pages/VerifyEmail"));
-const DonationFailed = lazy(() => import("../pages/DonationFailed"));
-const DonationSuccessful = lazy(() => import("../pages/DonationSuccessful"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 const DonationResult = lazy(() => import("../pages/DonationResult"));
 
