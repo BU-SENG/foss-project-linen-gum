@@ -7,24 +7,24 @@ export const createCampaign = async (req, res) => {
       title,
       description,
       category,
-      location,
-      images,
+        location,
       fundingGoal,
       duration,
     } = req.body;
 
     // Validate required fields
-    if (
-      !title ||
-      !description ||
-      !category ||
-      !location ||
-      !fundingGoal ||
-      !duration
-    ) {
+      const missingFields = [];
+      if (!title) missingFields.push('title');
+      if (!description) missingFields.push('description');
+      if (!category) missingFields.push('category');
+      if (!location) missingFields.push('location');
+      if (!fundingGoal) missingFields.push('fundingGoal');
+      if (!duration) missingFields.push('duration');
+
+      if (missingFields.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "Please provide all required fields",
+          message: `Missing required fields: ${missingFields.join(', ')}`,
       });
     }
 
@@ -44,18 +44,30 @@ export const createCampaign = async (req, res) => {
       });
     }
 
+      // Process uploaded images
+      const imageUrls = [];
+      if (req.files && req.files.length > 0) {
+          // Generate URLs for uploaded files
+          req.files.forEach((file) => {
+              // Store relative path that can be served as static file
+              const imageUrl = `/uploads/campaigns/${file.filename}`;
+              imageUrls.push(imageUrl);
+          });
+      }
+
     // Create new campaign
-    const newCampaign = new Campaign({
+      const campaignData = {
       title,
       description,
       category,
       location,
-      images: images || [],
+          images: imageUrls,
       fundingGoal,
       duration,
       createdBy: req.userId, // From auth middleware
-    });
+      };
 
+      const newCampaign = new Campaign(campaignData);
     await newCampaign.save();
 
     return res.status(201).json({
@@ -163,8 +175,7 @@ export const updateCampaign = async (req, res) => {
       title,
       description,
       category,
-      location,
-      images,
+        location,
       fundingGoal,
       duration,
     } = req.body;
@@ -211,12 +222,22 @@ export const updateCampaign = async (req, res) => {
       });
     }
 
+      // Process uploaded images if any
+      if (req.files && req.files.length > 0) {
+          const newImageUrls = [];
+          req.files.forEach((file) => {
+              const imageUrl = `/uploads/campaigns/${file.filename}`;
+              newImageUrls.push(imageUrl);
+          });
+          // Append new images to existing ones
+          campaign.images = [...campaign.images, ...newImageUrls];
+      }
+
     // Update only the fields that are provided
     if (title) campaign.title = title;
     if (description) campaign.description = description;
     if (category) campaign.category = category;
-    if (location) campaign.location = location;
-    if (images) campaign.images = images;
+      if (location) campaign.location = location;
     if (fundingGoal) campaign.fundingGoal = fundingGoal;
     if (duration) campaign.duration = duration;
 
