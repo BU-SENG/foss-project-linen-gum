@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { MenuIcon, XIcon, HeartIcon, UserIcon } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // Mock authentication state. It will be updated to be dynamic when integrated with the backend
-  const isLoggedIn = false;
-  const userRole = null;
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const userRole = user?.role;
   return (
     <nav className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,28 +39,25 @@ const Header = () => {
           </div>
           {/* Right section: Auth buttons or user dashboard links */}
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <div className="flex items-center">
                 {/* Conditional admin dashboard link */}
                 {userRole === "admin" && (
                   <Link
-                    to="/admin/dashboard"
-                    className="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                    to="/admin/home"
+                    className="ml-4 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium"
                   >
                     Admin Dashboard
                   </Link>
                 )}
                 {userRole === "creator" && (
                   <Link
-                    to="/creator/dashboard"
-                    className="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                    to="/creator/home"
+                    className="ml-4 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium"
                   >
                     Creator Dashboard
                   </Link>
                 )}
-                <button className="ml-4 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">
-                  My Account
-                </button>
               </div>
             ) : (
               // When user is NOT logged in
@@ -111,19 +108,8 @@ const Header = () => {
             >
               Campaigns
             </Link>
-            <Link
-              to="/"
-              className="text-gray-500 hover:bg-gray-50 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-            >
-              About
-            </Link>
-            <Link
-              to="/"
-              className="text-gray-500 hover:bg-gray-50 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
-            >
-              Contact
-            </Link>
-            {!isLoggedIn && (
+
+            {!isAuthenticated && (
               <>
                 <Link
                   to="/auth"
@@ -141,16 +127,16 @@ const Header = () => {
             )}
             {userRole === "admin" && (
               <Link
-                to="/admin/dashboard"
-                className="text-gray-500 hover:bg-gray-50 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                to="/admin/home"
+                className="text-blue-700 hover:bg-gray-50 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
               >
                 Admin Dashboard
               </Link>
             )}
             {userRole === "creator" && (
               <Link
-                to="/creator/dashboard"
-                className="text-gray-500 hover:bg-gray-50 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                to="/creator/home"
+                className="text-blue-700 hover:bg-gray-50 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
               >
                 Creator Dashboard
               </Link>
