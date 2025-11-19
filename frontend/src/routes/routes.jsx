@@ -17,8 +17,6 @@ const CampaignDetails = lazy(() => import("../pages/CampaignDetails"));
 const Donate = lazy(() => import("../pages/Donate"));
 const SignUp = lazy(() => import("../pages/Auth/SignUp"));
 const SignIn = lazy(() => import("../pages/Auth/SignIn"));
-const DonationFailed = lazy(() => import("../pages/DonationFailed"));
-const DonationSuccessful = lazy(() => import("../pages/DonationSuccessful"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 const DonationResult = lazy(() => import("../pages/DonationResult"));
 
@@ -76,32 +74,15 @@ export const routes = createRoutesFromElements(
       {/* Donation Result page */}
       <Route
         path="donation-result"
-        element={<RouteWithAnimation Component={DonationResult} Fallback={Preloader} />}
+        element={
+          <RouteWithAnimation Component={DonationResult} Fallback={Preloader} />
+        }
       />
 
       {/* Sign-up page */}
       <Route
         path="signup"
         element={<RouteWithAnimation Component={SignUp} Fallback={Preloader} />}
-      />
-
-      {/* Donation Successful Page */}
-      <Route
-        path="success"
-        element={
-          <RouteWithAnimation
-            Component={DonationSuccessful}
-            Fallback={Preloader}
-          />
-        }
-      />
-
-      {/* Donation Failed Page */}
-      <Route
-        path="failed"
-        element={
-          <RouteWithAnimation Component={DonationFailed} Fallback={Preloader} />
-        }
       />
 
       {/* Sign-in page */}
