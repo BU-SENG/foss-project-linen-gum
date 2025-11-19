@@ -45,4 +45,45 @@ export const VERIFICATION_EMAIL_TEMPLATE = ({
 </html>
 `;
 
+export const DONATION_SUCCESS_EMAIL_TEMPLATE = ({ amount, campaignTitle }) => `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank You for Your Donation - Aidly</title>
+</head>
+<body style="margin:0; padding:0; font-family: 'Segoe UI', Arial, sans-serif; background-color:#f5f8fa;">
 
+  <!-- Header -->
+  <div style="background-color: #0d9488; padding: 20px 30px; text-align: center;">
+    <h1 style="margin: 0; color: #ffffff; font-size: 22px;">Aidly Donations</h1>
+  </div>
+
+  <!-- Body -->
+  <div style="background-color: #ffffff; max-width: 600px; margin: 20px auto; padding: 30px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08);">
+    <h2 style="color: #0d9488; margin-bottom: 10px;">Thank You, Valued Donor! 💖</h2>
+    
+    <p style="font-size: 16px; color: #333; line-height: 1.6; margin-bottom: 10px;">
+      Your generous donation of <strong>₦${amount.toLocaleString()}</strong> 
+      to the campaign <strong>“${campaignTitle}”</strong> was successfully received.
+    </p>
+    
+    <p style="font-size: 15px; color: #555; line-height: 1.6;">
+      Your support keeps us moving forward and helps make a difference through <strong>Aidly</strong>.
+    </p>
+
+    <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 25px 0;">
+
+  </div>
+
+  <!-- Footer -->
+  <div style="background-color: #f0fdfa; padding: 15px 20px; text-align: center;">
+    <p style="font-size: 12px; color: #777; margin: 0;">
+      © ${new Date().getFullYear()} Aidly Donations. All rights reserved.
+    </p>
+  </div>
+
+</body>
+</html>
+`;

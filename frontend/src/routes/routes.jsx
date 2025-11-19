@@ -6,6 +6,7 @@ import { Route, createRoutesFromElements } from "react-router-dom";
 import RouteWithAnimation from "../utils/RouteWithAnimation";
 import Preloader from "../components/Preloader";
 import ErrorFallback from "../components/ErrorFallback";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 // Lazy load all components to improve performance
 const RootLayout = lazy(() => import("../layout/RootLayout"));
@@ -17,9 +18,11 @@ const CampaignDetails = lazy(() => import("../pages/CampaignDetails"));
 const Donate = lazy(() => import("../pages/Donate"));
 const SignUp = lazy(() => import("../pages/Auth/SignUp"));
 const SignIn = lazy(() => import("../pages/Auth/SignIn"));
+const VerifyEmail = lazy(() => import("../pages/VerifyEmail"));
 const DonationFailed = lazy(() => import("../pages/DonationFailed"));
 const DonationSuccessful = lazy(() => import("../pages/DonationSuccessful"));
 const NotFound = lazy(() => import("../pages/NotFound"));
+const DonationResult = lazy(() => import("../pages/DonationResult"));
 
 const CreatorDashboard = lazy(() =>
   import("../pages/Dashboard/Creator/CreatorDashboard")
@@ -72,35 +75,32 @@ export const routes = createRoutesFromElements(
         element={<RouteWithAnimation Component={Donate} Fallback={Preloader} />}
       />
 
+      {/* Donation Result page */}
+      <Route
+        path="donation-result"
+        element={
+          <RouteWithAnimation Component={DonationResult} Fallback={Preloader} />
+        }
+      />
+
       {/* Sign-up page */}
       <Route
         path="signup"
         element={<RouteWithAnimation Component={SignUp} Fallback={Preloader} />}
       />
 
-      {/* Donation Successful Page */}
-      <Route
-        path="success"
-        element={
-          <RouteWithAnimation
-            Component={DonationSuccessful}
-            Fallback={Preloader}
-          />
-        }
-      />
-
-      {/* Donation Failed Page */}
-      <Route
-        path="failed"
-        element={
-          <RouteWithAnimation Component={DonationFailed} Fallback={Preloader} />
-        }
-      />
-
       {/* Sign-in page */}
       <Route
         path="signin"
         element={<RouteWithAnimation Component={SignIn} Fallback={Preloader} />}
+      />
+
+      {/* Verify email page */}
+      <Route
+        path="/verify-email"
+        element={
+          <RouteWithAnimation Component={VerifyEmail} Fallback={Preloader} />
+        }
       />
 
       {/* Page not found */}
@@ -113,7 +113,7 @@ export const routes = createRoutesFromElements(
     </Route>
 
     {/* Campaign Creator Routes */}
-    <Route>
+    <Route element={<ProtectedRoute allowedRoles={["creator"]} />}>
       <Route
         path="/creator"
         element={<DashboardLayout />}
@@ -153,9 +153,9 @@ export const routes = createRoutesFromElements(
     </Route>
 
     {/* Admin Routes */}
-    <Route>
+    <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
       <Route
-        path="/admin/"
+        path="/admin"
         element={<DashboardLayout />}
         errorElement={<ErrorFallback />}
       >
