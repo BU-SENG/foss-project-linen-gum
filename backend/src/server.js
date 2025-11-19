@@ -1,7 +1,12 @@
 // Import required modules
 import dotenv from "dotenv"; // Loads environment variables from a .env file
+import express from "express"; 
 import app from "./app.js"; // Import the Express app instance
 import { connectDB } from "./config/connectDB.js";
+import cookieParser from 'cookie-parser';
+
+app.use(express.json());
+app.use(cookieParser());
 
 // Initialize environment variables
 dotenv.config();
@@ -23,3 +28,4 @@ const startServer = async () => {
 };
 
 startServer();
+
