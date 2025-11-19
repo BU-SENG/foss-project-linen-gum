@@ -6,6 +6,7 @@ import { Route, createRoutesFromElements } from "react-router-dom";
 import RouteWithAnimation from "../utils/RouteWithAnimation";
 import Preloader from "../components/Preloader";
 import ErrorFallback from "../components/ErrorFallback";
+import Unauthorized from "../pages/Dashboard/Creator/Unauthorized";
 
 // Lazy load all components to improve performance
 const RootLayout = lazy(() => import("../layout/RootLayout"));
@@ -70,6 +71,11 @@ export const routes = createRoutesFromElements(
       <Route
         path="donate"
         element={<RouteWithAnimation Component={Donate} Fallback={Preloader} />}
+      />
+
+      <Route
+        path="unauthorise"
+        element={<RouteWithAnimation Component={Unauthorized} Fallback={Preloader} />}
       />
 
       {/* Sign-up page */}
