@@ -26,7 +26,9 @@ const Button = ({
   };
 
   const widthStyles = fullWidth ? "w-full" : "";
-  const buttonStyles = ${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${className};
+
+  // ✅ Fixed template literal
+  const buttonStyles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${className}`;
 
   return (
     <button className={buttonStyles} {...props}>

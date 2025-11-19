@@ -22,21 +22,18 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const pendingCampaignsList = [...pendingCampaigns];
-
-  const approvedCampaignsList = campaigns.filter(
-    (campaign) => campaign.isApproved
-  );
+  const approvedCampaignsList = campaigns.filter((c) => c.isApproved);
 
   const filteredPendingCampaigns = pendingCampaignsList.filter(
-    (campaign) =>
-      campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      campaign.creator.toLowerCase().includes(searchTerm.toLowerCase())
+    (c) =>
+      c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.creator.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredApprovedCampaigns = approvedCampaignsList.filter(
-    (campaign) =>
-      campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      campaign.creator.toLowerCase().includes(searchTerm.toLowerCase())
+    (c) =>
+      c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.creator.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const stats = [
@@ -60,17 +57,15 @@ const AdminDashboard = () => {
     },
     {
       label: "Total Donations",
-      value: "$157,892",
+      value: "₦157,892",
       icon: CheckCircle,
       color: "bg-purple-100 text-purple-600",
     },
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen w-full">
+    <div>
       <div className="flex">
-
-        {/* Main Content */}
         <main className="flex-1 p-6">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
@@ -83,7 +78,6 @@ const AdminDashboard = () => {
                   Manage campaigns, users, and platform settings
                 </p>
               </div>
-
               <div className="mt-4 md:mt-0">
                 <Link to="/">
                   <Button variant="outline" size="sm">
@@ -100,7 +94,7 @@ const AdminDashboard = () => {
                 <div key={index} className="bg-white rounded-lg shadow-sm p-6">
                   <div className="flex items-center">
                     <div
-                      className={w-12 h-12 ${stat.color} rounded-full flex items-center justify-center mr-4}
+                      className={`w-12 h-12 ${stat.color} rounded-full flex items-center justify-center mr-4`}
                     >
                       <stat.icon size={24} />
                     </div>
@@ -131,7 +125,6 @@ const AdminDashboard = () => {
                   >
                     Pending Approval ({filteredPendingCampaigns.length})
                   </button>
-
                   <button
                     className={`px-6 py-3 text-sm font-medium ${
                       activeTab === "approved"
@@ -152,7 +145,6 @@ const AdminDashboard = () => {
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <Search size={18} className="text-gray-400" />
                     </div>
-
                     <input
                       type="text"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
@@ -196,131 +188,81 @@ const AdminDashboard = () => {
                   </thead>
 
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {/* Pending Tab */}
-                    {activeTab === "pending"
-                      ? filteredPendingCampaigns.length > 0
-                        ? filteredPendingCampaigns.map((campaign) => (
-                            <tr key={campaign.id}>
-                              <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="flex items-center">
-                                  <img
-                                    src={campaign.image}
-                                    alt={campaign.title}
-                                    className="h-10 w-10 rounded-md object-cover"
-                                  />
-                                  <div className="ml-4">
-                                    <div className="text-sm font-medium text-gray-900">
-                                      {campaign.title}
-                                    </div>
-                                  </div>
+                    {(activeTab === "pending"
+                      ? filteredPendingCampaigns
+                      : filteredApprovedCampaigns
+                    ).length > 0 ? (
+                      (activeTab === "pending"
+                        ? filteredPendingCampaigns
+                        : filteredApprovedCampaigns
+                      ).map((campaign) => (
+                        <tr key={campaign.id}>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              <img
+                                src={campaign.image}
+                                alt={campaign.title}
+                                className="h-10 w-10 rounded-md object-cover"
+                              />
+                              <div className="ml-4">
+                                <div className="text-sm font-medium text-gray-900">
+                                  {campaign.title}
                                 </div>
-                              </td>
-
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {campaign.creator}
-                              </td>
-
-                              <td className="px-6 py-4 whitespace-nowrap">
-                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                  {campaign.category}
-                                </span>
-                              </td>
-
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                ${campaign.goalAmount.toLocaleString()}
-                              </td>
-
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {campaign.createdAt}
-                              </td>
-
-                              <td className="px-6 py-4 whitespace-nowrap text-right">
-                                <div className="flex justify-end space-x-2">
-                                  <button className="text-blue-600 hover:text-blue-800">
-                                    <Eye size={18} />
-                                  </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {campaign.creator}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                              {campaign.category}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            ₦{campaign.goalAmount.toLocaleString()}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {campaign.createdAt}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right">
+                            <div className="flex justify-end space-x-2">
+                              <Link
+                                to={`/campaign/${campaign.id}`}
+                                className="text-blue-600 hover:text-blue-800"
+                              >
+                                <Eye size={18} />
+                              </Link>
+                              {activeTab === "pending" && (
+                                <>
                                   <button className="text-green-600 hover:text-green-800">
                                     <CheckCircle size={18} />
                                   </button>
                                   <button className="text-red-600 hover:text-red-800">
                                     <XCircle size={18} />
                                   </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ))
-                        : (
-                          <tr>
-                            <td
-                              colSpan={6}
-                              className="px-6 py-4 text-center text-gray-500"
-                            >
-                              No pending campaigns found.
-                            </td>
-                          </tr>
-                        )
-                      : filteredApprovedCampaigns.length > 0
-                      ? filteredApprovedCampaigns.map((campaign) => (
-                          <tr key={campaign.id}>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex items-center">
-                                <img
-                                  src={campaign.image}
-                                  alt={campaign.title}
-                                  className="h-10 w-10 rounded-md object-cover"
-                                />
-                                <div className="ml-4">
-                                  <div className="text-sm font-medium text-gray-900">
-                                    {campaign.title}
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                              {campaign.creator}
-                            </td>
-
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                {campaign.category}
-                              </span>
-                            </td>
-
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                              ${campaign.goalAmount.toLocaleString()}
-                            </td>
-
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {campaign.createdAt}
-                            </td>
-
-                            <td className="px-6 py-4 whitespace-nowrap text-right">
-                              <div className="flex justify-end space-x-2">
-                                <Link
-                                  to={/campaign/${campaign.id}}
-                                  className="text-blue-600 hover:text-blue-800"
-                                >
-                                  <Eye size={18} />
-                                </Link>
-
+                                </>
+                              )}
+                              {activeTab === "approved" && (
                                 <button className="text-red-600 hover:text-red-800">
                                   <XCircle size={18} />
                                 </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))
-                      : (
-                        <tr>
-                          <td
-                            colSpan={6}
-                            className="px-6 py-4 text-center text-gray-500"
-                          >
-                            No approved campaigns found.
+                              )}
+                            </div>
                           </td>
                         </tr>
-                      )}
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan={6}
+                          className="px-6 py-4 text-center text-gray-500"
+                        >
+                          No {activeTab === "pending" ? "pending" : "approved"}{" "}
+                          campaigns found.
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
