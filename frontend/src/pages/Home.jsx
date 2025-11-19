@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { campaignsData } from "../data/campaignsData";
+import { fetchAllCampaigns } from "../api/campaign"; // your API function
 import CampaignCard from "../components/CampaignCard";
 import heroImage from "../assets/images/donate.webp";
 
-// Get the first 3 campaigns for the featured section
-const featuredCampaigns = campaignsData.slice(0, 3);
-
 const Home = () => {
+  const [featuredCampaigns, setFeaturedCampaigns] = useState([]);
+
+  useEffect(() => {
+    const loadFeaturedCampaigns = async () => {
+      const campaigns = await fetchAllCampaigns();
+
+      // Sort by newest first and take the last 3 created campaigns
+      const latestCampaigns = campaigns
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, 3);
+      setFeaturedCampaigns(latestCampaigns);
+    };
+
+    loadFeaturedCampaigns();
+  }, []);
+
   return (
     <div className="w-full overflow-auto">
       {/* Hero section */}
