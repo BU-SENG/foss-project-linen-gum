@@ -55,8 +55,8 @@ const MyCampaigns = () => {
 
               {/* New Campaign Button (Hardcoded) */}
               <div className="mt-4 md:mt-0">
-                <Link to="/creator/create">
-                  <button className="bg-blue-50 text-blue-600 py-2 px-4 rounded-md hover:bg-blue-100 transition-colors text-sm font-medium flex items-center">
+                <Link to="/creator/create-campaign">
+                  <button className="bg-blue-50 cursor-pointer text-blue-600 py-2 px-4 rounded-md hover:bg-blue-100 transition-colors text-sm font-medium flex items-center">
                     <FilePlus size={16} className="mr-2" />
                     New Campaign
                   </button>

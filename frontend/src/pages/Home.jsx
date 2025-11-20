@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchAllCampaigns } from "../api"; 
+import { fetchAllCampaigns } from "../api";
+import { useSelector } from "react-redux";
 import CampaignCard from "../components/CampaignCard";
 import heroImage from "../assets/images/donate.webp";
 
 const Home = () => {
   const [featuredCampaigns, setFeaturedCampaigns] = useState([]);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+
+  const linkDestination =
+    user?.role === "creator"
+      ? "/creator/create-campaign" 
+      : "/signup";
 
   useEffect(() => {
     const loadFeaturedCampaigns = async () => {
@@ -34,14 +41,14 @@ const Home = () => {
               Support causes you care about and help change lives through
               Aidly's trusted donation platform.
             </p>
-            <div className="w-full md:w-fit flex flex-col md:flex-row gap-4 items-stretch md:items-center">
-              <Link to="/campaigns" className="w-full md:w-auto">
-                <button className="w-full bg-green-500 hover:bg-green-600 transition-colors text-white px-4 py-3 rounded-md border-none">
+            <div className="w-full r md:w-fit flex flex-col md:flex-row gap-4 items-stretch md:items-center">
+              <Link to="/campaigns" className="w-full md:w-auto ">
+                <button className="w-full bg-green-500 cursor-pointer hover:bg-green-600 transition-colors text-white px-4 py-3 rounded-md border-none">
                   Browse Campaigns
                 </button>
               </Link>
-              <Link to="/donate" className="w-full md:w-auto">
-                <button className="w-full bg-transparent hover:bg-white/10 transition-colors text-white px-4 py-3 rounded-md border border-white">
+              <Link to={linkDestination} className="w-full md:w-auto">
+                <button className="w-full cursor-pointer bg-transparent hover:bg-white/10 transition-colors text-white px-4 py-3 rounded-md border border-white">
                   Start a Campaign
                 </button>
               </Link>
