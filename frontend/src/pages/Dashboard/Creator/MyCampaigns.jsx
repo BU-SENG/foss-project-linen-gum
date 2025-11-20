@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -10,29 +10,53 @@ import {
   Edit,
   Eye,
 } from "lucide-react";
-import { campaigns } from "../../../utils/mockData";
+import { fetchMyCampaigns } from "../../../api/campaign";
+import { toast } from "react-hot-toast";
 
 const MyCampaigns = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [campaigns, setCampaigns] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Get mock creator campaigns
-  const creatorCampaigns = campaigns.filter(
-    (campaign) =>
-      campaign.creator === "Water Aid Foundation" ||
-      campaign.creator === "Education First"
-  );
+  useEffect(() => {
+    loadCampaigns();
+  }, []);
+
+  const loadCampaigns = async () => {
+    try {
+      setIsLoading(true);
+      const data = await fetchMyCampaigns();
+      setCampaigns(data);
+    } catch (error) {
+      console.error("Error loading campaigns:", error);
+      toast.error("Failed to load campaigns");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Calculate days left from duration and dateCreated
+  const calculateDaysLeft = (dateCreated, duration) => {
+    const created = new Date(dateCreated);
+    const endDate = new Date(created.getTime() + duration * 24 * 60 * 60 * 1000);
+    const today = new Date();
+    const daysLeft = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+    return Math.max(0, daysLeft);
+  };
 
   // Apply filters
-  const filteredCampaigns = creatorCampaigns.filter((campaign) => {
+  const filteredCampaigns = campaigns.filter((campaign) => {
     const matchesSearch = campaign.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
 
     const matchesStatus =
       statusFilter === "all" ||
-      (statusFilter === "active" && campaign.isApproved) ||
-      (statusFilter === "pending" && !campaign.isApproved);
+      (statusFilter === "active" && campaign.status === "approved") ||
+      (statusFilter === "pending" && campaign.status === "pending") ||
+      (statusFilter === "rejected" && campaign.status === "rejected") ||
+      (statusFilter === "suspended" && campaign.status === "suspended");
 
     return matchesSearch && matchesStatus;
   });
@@ -89,6 +113,8 @@ const MyCampaigns = () => {
                   <option value="all">All Status</option>
                   <option value="active">Active</option>
                   <option value="pending">Pending Approval</option>
+                  <option value="rejected">Rejected</option>
+                  <option value="suspended">Suspended</option>
                 </select>
               </div>
             </div>
@@ -100,109 +126,137 @@ const MyCampaigns = () => {
               </p>
             </div>
 
+            {/* Loading State */}
+            {isLoading && (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+                <p className="mt-4 text-gray-600">Loading campaigns...</p>
+              </div>
+            )}
+
             {/* Campaigns Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredCampaigns.map((campaign) => {
-                const progress =
-                  (campaign.raisedAmount / campaign.goalAmount) * 100;
+            {!isLoading && filteredCampaigns.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCampaigns.map((campaign) => {
+                  const progress =
+                    (campaign.amountRaised / campaign.fundingGoal) * 100;
+                  const daysLeft = calculateDaysLeft(campaign.dateCreated, campaign.duration);
+                  const imageUrl = campaign.images && campaign.images.length > 0
+                    ? `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${campaign.images[0]}`
+                    : 'https://via.placeholder.com/400x300?text=No+Image';
 
-                return (
-                  <div
-                    key={campaign.id}
-                    className="bg-white rounded-lg shadow-sm overflow-hidden"
-                  >
-                    <img
-                      src={campaign.image}
-                      alt={campaign.title}
-                      className="w-full h-48 object-cover"
-                    />
+                  // Status styling
+                  const statusConfig = {
+                    approved: { bg: "bg-green-100", text: "text-green-800", label: "Active" },
+                    pending: { bg: "bg-yellow-100", text: "text-yellow-800", label: "Pending" },
+                    rejected: { bg: "bg-red-100", text: "text-red-800", label: "Rejected" },
+                    suspended: { bg: "bg-gray-100", text: "text-gray-800", label: "Suspended" },
+                  };
+                  const status = statusConfig[campaign.status] || statusConfig.pending;
 
-                    <div className="p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <span
-                          className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                            campaign.isApproved
-                              ? "bg-green-100 text-green-800"
-                              : "bg-yellow-100 text-yellow-800"
-                          }`}
-                        >
-                          {campaign.isApproved ? "Active" : "Pending"}
-                        </span>
+                  return (
+                    <div
+                      key={campaign._id}
+                      className="bg-white rounded-lg shadow-sm overflow-hidden"
+                    >
+                      <img
+                        src={imageUrl}
+                        alt={campaign.title}
+                        className="w-full h-48 object-cover"
+                        onError={(e) => {
+                          e.target.src = 'https://via.placeholder.com/400x300?text=No+Image';
+                        }}
+                      />
 
-                        <span className="text-xs text-gray-500">
-                          {campaign.daysLeft} days left
-                        </span>
-                      </div>
+                      <div className="p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <span
+                            className={`px-2 py-1 text-xs font-semibold rounded-full ${status.bg} ${status.text}`}
+                          >
+                            {status.label}
+                          </span>
 
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        {campaign.title}
-                      </h3>
+                          <span className="text-xs text-gray-500">
+                            {daysLeft} days left
+                          </span>
+                        </div>
 
-                      {/* Progress Bar */}
-                      <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
-                        <div
-                          className="bg-green-500 h-2 rounded-full"
-                          style={{ width: `${Math.min(progress, 100)}%` }}
-                        ></div>
-                      </div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                          {campaign.title}
+                        </h3>
 
-                      <div className="flex justify-between text-sm text-gray-600 mb-4">
-                        <span className="font-semibold">
-                          ₦{campaign.raisedAmount.toLocaleString()}
-                        </span>
-                        <span>of ₦{campaign.goalAmount.toLocaleString()}</span>
-                      </div>
+                        {/* Progress Bar */}
+                        <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                          <div
+                            className="bg-green-500 h-2 rounded-full"
+                            style={{ width: `${Math.min(progress, 100)}%` }}
+                          ></div>
+                        </div>
 
-                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span>{campaign.donorCount} donors</span>
-                        <span>{Math.round(progress)}% funded</span>
-                      </div>
+                        <div className="flex justify-between text-sm text-gray-600 mb-4">
+                          <span className="font-semibold">
+                            ${campaign.amountRaised.toLocaleString()}
+                          </span>
+                          <span>of ${campaign.fundingGoal.toLocaleString()}</span>
+                        </div>
 
-                      <div className="flex gap-2">
-                        {/* View button */}
-                        <Link
-                          to={`/campaign/${campaign.id}`}
-                          className="flex-1"
-                        >
-                          <button className="w-full bg-blue-50 text-blue-600 py-2 px-4 rounded-md hover:bg-blue-100 transition-colors text-sm font-medium flex items-center justify-center">
-                            <Eye size={16} className="mr-1" />
-                            View
-                          </button>
-                        </Link>
+                        <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                          <span>{campaign.numberOfDonors} donors</span>
+                          <span>{Math.round(progress)}% funded</span>
+                        </div>
 
-                        {/* Edit button */}
-                        <Link
-                          to={`/creator/edit/${campaign.id}`}
-                          className="flex-1"
-                        >
-                          <button className="w-full bg-gray-50 text-gray-600 py-2 px-4 rounded-md hover:bg-gray-100 transition-colors text-sm font-medium flex items-center justify-center">
-                            <Edit size={16} className="mr-1" />
-                            Edit
-                          </button>
-                        </Link>
+                        <div className="flex gap-2">
+                          {/* View button */}
+                          <Link
+                            to={`/campaign/${campaign._id}`}
+                            className="flex-1"
+                          >
+                            <button className="w-full bg-blue-50 text-blue-600 py-2 px-4 rounded-md hover:bg-blue-100 transition-colors text-sm font-medium flex items-center justify-center">
+                              <Eye size={16} className="mr-1" />
+                              View
+                            </button>
+                          </Link>
+
+                          {/* Edit button - only for pending/approved campaigns */}
+                          {(campaign.status === "pending" || campaign.status === "approved") && (
+                            <Link
+                              to={`/creator/edit/${campaign._id}`}
+                              className="flex-1"
+                            >
+                              <button className="w-full bg-gray-50 text-gray-600 py-2 px-4 rounded-md hover:bg-gray-100 transition-colors text-sm font-medium flex items-center justify-center">
+                                <Edit size={16} className="mr-1" />
+                                Edit
+                              </button>
+                            </Link>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Empty State */}
-            {filteredCampaigns.length === 0 && (
+            {!isLoading && filteredCampaigns.length === 0 && (
               <div className="text-center py-12">
                 <FileText size={48} className="mx-auto text-gray-400 mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
                   No campaigns found
                 </h3>
                 <p className="text-gray-500 mb-6">
-                  Create your first campaign to get started
+                  {campaigns.length === 0 
+                    ? "Create your first campaign to get started"
+                    : "No campaigns match your filters"}
                 </p>
 
-                <Link to="/creator/create">
-                  <button className="bg-blue-50 text-blue-600 py-2 px-4 rounded-md hover:bg-blue-100 transition-colors text-sm font-medium">
-                    Create Campaign
-                  </button>
-                </Link>
+                {campaigns.length === 0 && (
+                  <Link to="/creator/create-campaign">
+                    <button className="bg-blue-50 text-blue-600 py-2 px-4 rounded-md hover:bg-blue-100 transition-colors text-sm font-medium">
+                      Create Campaign
+                    </button>
+                  </Link>
+                )}
               </div>
             )}
           </div>

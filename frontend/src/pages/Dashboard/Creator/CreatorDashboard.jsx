@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import medicalImage from "../../../assets/images/medical.png";
 import childrenImage from "../../../assets/images/children.png";
 
@@ -42,9 +43,11 @@ const CreatorDashboard = () => {
             </p>
           </div>
 
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium whitespace-nowrap">
-            + New Campaign
-          </button>
+          <Link to="/creator/create-campaign">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium whitespace-nowrap cursor-pointer">
+              + New Campaign
+            </button>
+          </Link>
         </div>
         {/* STATS GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
