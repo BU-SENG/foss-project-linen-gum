@@ -204,6 +204,7 @@ foss-project-linen-gum/
 │   ├── node_modules/      # Auto-generated after npm install
 │   ├── public/
 │   ├── src/
+│   │   ├── api/
 │   │   ├── assets/
 │   │   ├── components/
 │   │   ├── layout/
