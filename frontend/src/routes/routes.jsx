@@ -21,6 +21,7 @@ const SignIn = lazy(() => import("../pages/Auth/SignIn"));
 const VerifyEmail = lazy(() => import("../pages/VerifyEmail"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 const DonationResult = lazy(() => import("../pages/DonationResult"));
+const Unauthorized = lazy(() => import("../pages/Unauthorized"))
 
 const CreatorDashboard = lazy(() =>
   import("../pages/Dashboard/Creator/CreatorDashboard")
@@ -98,6 +99,13 @@ export const routes = createRoutesFromElements(
         path="/verify-email"
         element={
           <RouteWithAnimation Component={VerifyEmail} Fallback={Preloader} />
+        }
+      />
+      {/* Unauthorized page */}
+      <Route
+        path="/unauthorized"
+        element={
+          <RouteWithAnimation Component={Unauthorized} Fallback={Preloader} />
         }
       />
 

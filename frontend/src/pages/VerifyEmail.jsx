@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { verifyEmailAPI } from "../api";
+import { toast } from "react-hot-toast";
 
 const VerifyEmail = () => {
   const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,11 +27,34 @@ const VerifyEmail = () => {
 
   const handleVerify = async (e) => {
     e.preventDefault();
-    // verify logic
+
+    if (!code) {
+      toast.error("Verification code is required");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
+      // Call your API wrapper
+      const res = await verifyEmailAPI({ code, email });
+
+      toast.success(
+        res.message || "Email verified successfully. You can now log in."
+      );
+
+      localStorage.removeItem("pendingEmail");
+      navigate("/signin");
+    } catch (error) {
+      console.error("Verification failed:", error);
+      toast.error(error.message || "Verification failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="w-full max-w-md mx-auto m-16">
+    <div className="w-full max-w-md mx-auto m-16 text-black">
       <div className="bg-white py-8 px-6 shadow-md rounded-lg">
         <h2 className="text-center text-2xl font-bold text-gray-900 mb-4">
           Verify Your Email

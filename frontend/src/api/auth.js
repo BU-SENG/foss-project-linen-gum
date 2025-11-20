@@ -20,6 +20,17 @@ export const registerCreator = async (data) => {
   }
 };
 
+
+// Verify email
+export const verifyEmailAPI = async (data) => {
+  try {
+    const res = await axios.post("/auth/verify-email", data);
+    return res.data; // { success, message }
+  } catch (error) {
+    throw handleApiError(error);
+  }
+};
+
 export const logoutUser = async () => {
   try {
     const res = await axios.post("/auth/logout");

@@ -114,6 +114,7 @@ export const registerCreator = async (req, res) => {
       verificationToken,
       salt
     );
+
     const verificationTokenExpiresAt = Date.now() + ONE_HOUR; // 1 hour from current time
 
     //   Create new creator
@@ -132,8 +133,6 @@ export const registerCreator = async (req, res) => {
     } catch (error) {
       console.error("Error sending code:", error);
     }
-
-    console.log(verificationToken);
 
     //   Sending response
     res.status(201).json({

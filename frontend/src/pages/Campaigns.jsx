@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import CampaignCard from "../components/CampaignCard";
-import { fetchAllCampaigns } from "../api/campaign";
+import { fetchAllCampaigns } from "../api";
 
 const Campaigns = () => {
   const [campaigns, setCampaigns] = useState([]);
