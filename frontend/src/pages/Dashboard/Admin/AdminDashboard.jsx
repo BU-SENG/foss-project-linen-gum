@@ -14,7 +14,7 @@ import {
   Search,
 } from "lucide-react";
 import Button from "../../../components/shared/Button";
-import { fetchDashboardStats, fetchCampaigns } from "../../../api/admin";
+import { fetchDashboardStats, fetchCampaigns } from "../../../api";
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -77,14 +77,6 @@ const AdminDashboard = () => {
               <p className="text-gray-600">
                 Manage campaigns, creators, and platform settings
               </p>
-            </div>
-            <div className="mt-4 md:mt-0">
-              <Link to="/">
-                <Button variant="outline" size="sm">
-                  <LogOut size={16} className="mr-2" />
-                  Exit Admin
-                </Button>
-              </Link>
             </div>
           </div>
 
@@ -154,7 +146,7 @@ const AdminDashboard = () => {
             {/* Tabs */}
             <div className="border-b border-gray-200 flex">
               <button
-                className={`px-6 py-3 text-sm font-medium ${
+                className={`px-6 py-3 text-sm font-medium cursor-pointer ${
                   activeTab === "pending"
                     ? "border-b-2 border-blue-600 text-blue-600"
                     : "text-gray-500 hover:text-gray-700"
@@ -164,7 +156,7 @@ const AdminDashboard = () => {
                 Pending Approval
               </button>
               <button
-                className={`px-6 py-3 text-sm font-medium ${
+                className={`px-6 py-3 text-sm font-medium cursor-pointer ${
                   activeTab === "approved"
                     ? "border-b-2 border-blue-600 text-blue-600"
                     : "text-gray-500 hover:text-gray-700"
@@ -188,12 +180,6 @@ const AdminDashboard = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-              </div>
-              <div>
-                <button className="inline-flex items-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg px-4 py-2.5">
-                  <Filter size={18} className="mr-2 text-gray-500" />
-                  <span>Filter</span>
-                </button>
               </div>
             </div>
 

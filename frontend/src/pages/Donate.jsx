@@ -283,7 +283,9 @@ const Donate = () => {
                   <h3 className="font-medium text-gray-900">
                     {campaign.title}
                   </h3>
-                  <p className="text-sm text-gray-500">by {campaign.creator}</p>
+                  <p className="text-sm text-gray-500">
+                    by {campaign.createdBy.fullName}
+                  </p>
                 </div>
               </div>
 

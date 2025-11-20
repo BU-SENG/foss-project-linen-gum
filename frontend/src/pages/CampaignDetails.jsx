@@ -188,7 +188,7 @@ const CampaignDetails = () => {
             </div>
 
             <Link to={`/donate/${campaign._id}`}>
-              <button className={`${buttonBase} ${buttonPrimary} ${buttonLG}`}>
+              <button className={`${buttonBase} ${buttonPrimary} ${buttonLG} cursor-pointer`}>
                 Donate Now
               </button>
             </Link>
