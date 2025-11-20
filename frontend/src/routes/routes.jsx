@@ -29,6 +29,9 @@ const CreatorDashboard = lazy(() =>
 const CreateCampaign = lazy(() =>
   import("../pages/Dashboard/Creator/CreateCampaign")
 );
+const EditCampaign = lazy(() =>
+  import("../pages/Dashboard/Creator/EditCampaign")
+);
 const MyCampaigns = lazy(() =>
   import("../pages/Dashboard/Creator/MyCampaigns")
 );
@@ -145,6 +148,15 @@ export const routes = createRoutesFromElements(
           element={
             <RouteWithAnimation
               Component={CreateCampaign}
+              Fallback={Preloader}
+            />
+          }
+        />
+        <Route
+          path="edit/:id"
+          element={
+            <RouteWithAnimation
+              Component={EditCampaign}
               Fallback={Preloader}
             />
           }

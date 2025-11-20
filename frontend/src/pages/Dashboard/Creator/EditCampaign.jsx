@@ -1,19 +1,16 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-  LayoutDashboard,
-  FileText,
-  FilePlus,
-  BarChart,
-  LogOut,
   Upload,
   AlertCircle,
+  ArrowLeft,
 } from "lucide-react";
 import { categories } from "../../../data/campaignsData";
-import { createCampaign } from "../../../api/campaign";
+import { fetchCampaignById, updateCampaign } from "../../../api/campaign";
 import { toast } from "react-hot-toast";
 
-const CreateCampaign = () => {
+const EditCampaign = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -23,7 +20,46 @@ const CreateCampaign = () => {
   const [location, setLocation] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
+  const [currentImage, setCurrentImage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadCampaign = async () => {
+      try {
+        setIsLoading(true);
+        const campaign = await fetchCampaignById(id);
+        
+        if (!campaign) {
+          toast.error("Campaign not found");
+          navigate("/creator/my-campaigns");
+          return;
+        }
+
+        // Populate form with existing data
+        setTitle(campaign.title);
+        setDescription(campaign.description);
+        setCategory(campaign.category);
+        setGoalAmount(campaign.fundingGoal);
+        setDuration(campaign.duration.toString());
+        setLocation(campaign.location);
+        
+        if (campaign.images && campaign.images.length > 0) {
+          const imageUrl = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${campaign.images[0]}`;
+          setCurrentImage(imageUrl);
+          setImagePreview(imageUrl);
+        }
+      } catch (error) {
+        console.error("Error loading campaign:", error);
+        toast.error("Failed to load campaign");
+        navigate("/creator/my-campaigns");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadCampaign();
+  }, [id, navigate]);
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
@@ -50,9 +86,13 @@ const CreateCampaign = () => {
     }
   };
 
+  const handleRemoveImage = () => {
+    setImageFile(null);
+    setImagePreview(currentImage);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted!"); // Debug log
 
     // Validate description length
     if (description.length < 100) {
@@ -66,12 +106,6 @@ const CreateCampaign = () => {
       return;
     }
 
-    if (!imageFile) {
-      toast.error("Please upload a campaign image");
-      return;
-    }
-
-    console.log("Validation passed, submitting..."); // Debug log
     setIsSubmitting(true);
 
     try {
@@ -83,33 +117,50 @@ const CreateCampaign = () => {
       formData.append("location", location);
       formData.append("fundingGoal", goalAmount);
       formData.append("duration", duration);
-      formData.append("image", imageFile);
+      
+      // Only append image if a new one was uploaded
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
 
-      console.log("Calling API..."); // Debug log
-      // Submit campaign
-      const response = await createCampaign(formData);
+      // Update campaign
+      const response = await updateCampaign(id, formData);
 
-      console.log("API Response:", response); // Debug log
       if (response.success) {
-        toast.success("Campaign submitted for review!");
+        toast.success("Campaign updated successfully!");
         navigate("/creator/my-campaigns");
       }
     } catch (error) {
-      console.error("Error creating campaign:", error);
-      toast.error(error.response?.data?.message || "Failed to create campaign");
+      console.error("Error updating campaign:", error);
+      toast.error(error.response?.data?.message || "Failed to update campaign");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="">
       <div className="mb-8">
+        <Link
+          to="/creator/my-campaigns"
+          className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4"
+        >
+          <ArrowLeft size={20} className="mr-2" />
+          Back to My Campaigns
+        </Link>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          Create New Campaign
+          Edit Campaign
         </h1>
         <p className="text-gray-600">
-          Fill in the details below to create your campaign
+          Update your campaign details below
         </p>
       </div>
 
@@ -119,11 +170,10 @@ const CreateCampaign = () => {
           <AlertCircle size={20} className="text-blue-600 mr-3 mt-0.5" />
           <div>
             <h3 className="text-sm font-medium text-blue-800 mb-1">
-              Campaign Review Process
+              Update Review
             </h3>
             <p className="text-sm text-blue-700">
-              All campaigns are reviewed by our team before going live. This
-              typically takes 1-2 business days.
+              Changes to approved campaigns may require re-approval from our team.
             </p>
           </div>
         </div>
@@ -162,7 +212,7 @@ const CreateCampaign = () => {
                 required
               />
               <p className="mt-1 text-sm text-gray-500">
-                Minimum 100 characters
+                Minimum 100 characters ({description.length} characters)
               </p>
             </div>
 
@@ -246,7 +296,7 @@ const CreateCampaign = () => {
           </h2>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Upload Image <span className="text-red-500">*</span>
+              Upload New Image (Optional)
             </label>
             {imagePreview ? (
               <div className="relative">
@@ -255,13 +305,32 @@ const CreateCampaign = () => {
                   alt="Campaign preview"
                   className="w-full h-64 object-cover rounded-lg"
                 />
-                <button
-                  type="button"
-                  onClick={() => setImagePreview("")}
-                  className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 cursor-pointer"
-                >
-                  ×
-                </button>
+                {imageFile && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 cursor-pointer"
+                  >
+                    ×
+                  </button>
+                )}
+                {!imageFile && (
+                  <div className="mt-4">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      id="image-upload"
+                      onChange={handleImageUpload}
+                    />
+                    <label
+                      htmlFor="image-upload"
+                      className="inline-block cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                    >
+                      Change Image
+                    </label>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
@@ -269,14 +338,13 @@ const CreateCampaign = () => {
                 <p className="text-sm text-gray-600 mb-2">
                   Click to upload or drag and drop
                 </p>
-                <p className="text-xs text-gray-500">PNG, JPG up to 10MB</p>
+                <p className="text-xs text-gray-500">PNG, JPG up to 5MB</p>
                 <input
                   type="file"
                   accept="image/*"
                   className="hidden"
                   id="image-upload"
                   onChange={handleImageUpload}
-                  required
                 />
                 <label
                   htmlFor="image-upload"
@@ -304,7 +372,7 @@ const CreateCampaign = () => {
             className="bg-blue-600 hover:bg-blue-700 text-white rounded-md text-base py-3 px-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Submitting..." : "Submit for Review"}
+            {isSubmitting ? "Updating..." : "Update Campaign"}
           </button>
         </div>
       </form>
@@ -312,4 +380,4 @@ const CreateCampaign = () => {
   );
 };
 
-export default CreateCampaign;
+export default EditCampaign;
