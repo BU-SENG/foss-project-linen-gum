@@ -36,7 +36,7 @@ const DashboardLayout = () => {
             <div className="relative w-64  ">
               <Suspense fallback={<Preloader />}>
                 {userRole === "creator" ? (
-                  <SidebarCreator />
+                  <SidebarCreator isMobile setIsOpen={setSidebarOpen} />
                 ) : (
                   <SidebarAdmin isMobile setIsOpen={setSidebarOpen} />
                 )}
