@@ -1,4 +1,17 @@
 import React from "react";
+import {
+  LayoutDashboard,
+  Users,
+  FileText,
+  Settings,
+  LogOut,
+  AlertTriangle,
+  CheckCircle,
+  XCircle,
+  Eye,
+  Filter,
+  Search,
+} from "lucide-react";
 
 const campaigns = [
   {
