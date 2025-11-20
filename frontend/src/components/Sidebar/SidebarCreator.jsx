@@ -240,7 +240,7 @@ export default function SidebarCreator({ isMobile = false, setIsOpen }) {
         <div className="p-4 border-t border-gray-200">
           <button
             onClick={handleLogout}
-            className="w-full mt-55 flex items-center gap-3 p-3 text-red-600 dark:text-red-400 rounded hover:bg-white dark:hover:bg-gray-800 cursor-pointer"
+            className="w-full mt-55 flex items-center gap-3 p-3 text-red-600  rounded hover:bg-gray-50  cursor-pointer"
           >
             <LogOut className="w-6 h-6" />
             <span>Logout</span>
