@@ -18,7 +18,7 @@ const AdminCampaignList = () => {
   const [loading, setLoading] = useState(true);
 
   const categories = [
-    "all",
+    "All",
     "Education",
     "Healthcare",
     "Environment",
@@ -32,8 +32,9 @@ const AdminCampaignList = () => {
     setLoading(true);
     try {
       // Assuming the API handles "all" to return everything
-      const data = await fetchCampaigns(statusFilter);
-      setCampaigns(data);
+     const queryStatus = statusFilter === "all" ? "" : statusFilter;
+     const data = await fetchCampaigns(queryStatus);
+     setCampaigns(data);
     } catch (error) {
       console.error("Error fetching campaigns:", error);
       toast.error("Failed to fetch campaigns");
