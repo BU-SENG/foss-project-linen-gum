@@ -106,7 +106,7 @@ function AdminCampaignList() {
           className="w-1/3 p-3 bg-white border rounded-xl"
         />
 
-        <select className="p-3 bg-white border rounded-xl">
+        <select className="p-3 bg-white cursor-pointer border rounded-xl">
           <option>All Status</option>
           <option>Approved</option>
           <option>Pending</option>
