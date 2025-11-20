@@ -20,11 +20,13 @@ const AdminCampaignList = () => {
   const categories = [
     "All",
     "Education",
-    "Healthcare",
+    "Health",
+    "Technology",
     "Environment",
-    "Disaster Relief",
-    "Animals",
-    "Sports",
+    "Community",
+    "Business",
+    "Charity",
+    "Art",
   ];
 
   // Fetch campaigns
@@ -99,7 +101,7 @@ const AdminCampaignList = () => {
       statusFilter === "all" || campaign.status === statusFilter;
 
     const matchesCategory =
-      categoryFilter === "all" || campaign.category === categoryFilter;
+      categoryFilter === "All" || campaign.category === categoryFilter;
 
     return matchesSearch && matchesStatus && matchesCategory;
   });
