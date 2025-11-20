@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchAllCampaigns } from "../api/campaign"; // your API function
+import { fetchAllCampaigns } from "../api"; 
 import CampaignCard from "../components/CampaignCard";
 import heroImage from "../assets/images/donate.webp";
 
